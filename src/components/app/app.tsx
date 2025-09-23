@@ -4,7 +4,7 @@ type AppProps = {
   placesCount: number;
 }
 
-function App({placesCount}: AppProps) {
+function App({placesCount}: AppProps): JSX.Element {
   return (
     <MainPage placesCount={placesCount}/>
   );
