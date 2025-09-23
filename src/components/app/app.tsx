@@ -1,9 +1,13 @@
 ﻿import MainPage from "../../pages/main-page/main-page.tsx";
 
-function App() {
+type AppProps = {
+  placesCount: number;
+}
+
+function App({placesCount}: AppProps) {
   return (
-    <MainPage/>
-  )
+    <MainPage placesCount={placesCount}/>
+  );
 }
 
 export default App;
