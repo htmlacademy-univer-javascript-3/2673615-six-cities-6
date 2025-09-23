@@ -1,4 +1,4 @@
-﻿import MainPage from "../../pages/main-page/main-page.tsx";
+﻿import MainPage from '../../pages/main-page/main-page.tsx';
 
 type AppProps = {
   placesCount: number;
