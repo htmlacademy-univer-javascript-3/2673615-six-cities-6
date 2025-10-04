@@ -32,7 +32,7 @@ function App({placesCount}: AppProps): JSX.Element {
           }
         />
         <Route
-          path={AppRoute.Offers}
+          path={AppRoute.Offer}
           element={<OfferPage/>}
         />
         <Route

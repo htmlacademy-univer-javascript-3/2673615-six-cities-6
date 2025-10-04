@@ -1,4 +1,7 @@
 ﻿import Logo from '../../components/logo/logo.tsx';
+import Styles from './not-found-page.module.css';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const.ts';
 
 function NotFoundPage(): JSX.Element {
   return (
@@ -12,9 +15,9 @@ function NotFoundPage(): JSX.Element {
       </header>
 
       <main className="page__main">
-        <div className="container" style={{textAlign: 'center'}}>
-          <h1 style={{fontSize: 'xxx-large'}}>404</h1>
-          <h2>Page not found</h2>
+        <div className={`container ${Styles.container}`}>
+          <h1>404. Page not found</h1>
+          <Link className={Styles.link} to={AppRoute.Root}>Click to go to the homepage</Link>
         </div>
       </main>
     </div>
