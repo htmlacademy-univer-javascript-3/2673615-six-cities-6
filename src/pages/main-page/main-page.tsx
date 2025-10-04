@@ -1,5 +1,5 @@
 ﻿import PlaceCard from '../../components/place-card/place-card.tsx';
-import Logo from "../../components/logo/logo.tsx";
+import Logo from '../../components/logo/logo.tsx';
 
 type MainPageProps = {
   placesCount: number;

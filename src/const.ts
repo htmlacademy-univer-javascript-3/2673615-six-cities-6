@@ -9,7 +9,7 @@ export enum AppRoute {
   Offers = '/offer/:id'
 }
 
-export enum AuthorizationStatus {
+export enum AutStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN'

@@ -1,4 +1,4 @@
-﻿import Logo from "../../components/logo/logo.tsx";
+﻿import Logo from '../../components/logo/logo.tsx';
 
 function FavoritesEmptyPage(): JSX.Element {
   return (

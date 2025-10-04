@@ -1,4 +1,4 @@
-﻿import Logo from "../../components/logo/logo.tsx";
+﻿import Logo from '../../components/logo/logo.tsx';
 
 function FavoritesPage(): JSX.Element {
   return (
@@ -49,7 +49,7 @@ function FavoritesPage(): JSX.Element {
                     <div className="favorites__image-wrapper place-card__image-wrapper">
                       <a href="#">
                         <img className="place-card__image" src="img/apartment-small-03.jpg" width="150" height="110"
-                             alt="Place image"
+                          alt="Place image"
                         />
                       </a>
                     </div>
@@ -60,7 +60,7 @@ function FavoritesPage(): JSX.Element {
                           <span className="place-card__price-text">&#47;&nbsp;night</span>
                         </div>
                         <button className="place-card__bookmark-button place-card__bookmark-button--active button"
-                                type="button"
+                          type="button"
                         >
                           <svg className="place-card__bookmark-icon" width="18" height="19">
                             <use xlinkHref="#icon-bookmark"></use>
@@ -85,7 +85,7 @@ function FavoritesPage(): JSX.Element {
                     <div className="favorites__image-wrapper place-card__image-wrapper">
                       <a href="#">
                         <img className="place-card__image" src="img/room-small.jpg" width="150" height="110"
-                             alt="Place image"
+                          alt="Place image"
                         />
                       </a>
                     </div>
@@ -96,7 +96,7 @@ function FavoritesPage(): JSX.Element {
                           <span className="place-card__price-text">&#47;&nbsp;night</span>
                         </div>
                         <button className="place-card__bookmark-button place-card__bookmark-button--active button"
-                                type="button"
+                          type="button"
                         >
                           <svg className="place-card__bookmark-icon" width="18" height="19">
                             <use xlinkHref="#icon-bookmark"></use>
@@ -132,7 +132,7 @@ function FavoritesPage(): JSX.Element {
                     <div className="favorites__image-wrapper place-card__image-wrapper">
                       <a href="#">
                         <img className="place-card__image" src="img/apartment-small-04.jpg" width="150" height="110"
-                             alt="Place image"
+                          alt="Place image"
                         />
                       </a>
                     </div>
@@ -143,7 +143,7 @@ function FavoritesPage(): JSX.Element {
                           <span className="place-card__price-text">&#47;&nbsp;night</span>
                         </div>
                         <button className="place-card__bookmark-button place-card__bookmark-button--active button"
-                                type="button"
+                          type="button"
                         >
                           <svg className="place-card__bookmark-icon" width="18" height="19">
                             <use xlinkHref="#icon-bookmark"></use>
