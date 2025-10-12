@@ -36,7 +36,7 @@ function App({placesCount}: AppProps): JSX.Element {
           element={<OfferPage/>}
         />
         <Route
-          path="*"
+          path={AppRoute.NotFound}
           element={<NotFoundPage/>}
         />
       </Routes>
