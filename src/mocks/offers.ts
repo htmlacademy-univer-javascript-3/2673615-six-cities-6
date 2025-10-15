@@ -5,6 +5,7 @@ export const offers: Offers = [
     id: 'de848aec-aaf9-4594-b7f0-c2c8945f9898',
     title: 'Beautiful & luxurious studio at great location',
     placeType: 'Apartment',
+    location: 'Amsterdam',
     isPremium: false,
     isFavorite: false,
     rating: 4.8,

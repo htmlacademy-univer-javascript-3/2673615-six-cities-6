@@ -5,6 +5,7 @@ export type Offer = {
     id: string;
     title: string;
     placeType: string;
+    location: string;
     isPremium: boolean;
     isFavorite: boolean;
     rating: number;
