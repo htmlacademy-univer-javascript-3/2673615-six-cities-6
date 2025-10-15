@@ -1,6 +1,6 @@
 ﻿import MainPage from '../../pages/main-page/main-page.tsx';
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
-import {AppRoute, AutStatus} from '../../const.ts';
+import {AppRoute, AuthStatus} from '../../const.ts';
 import LoginPage from '../../pages/login-page/login-page.tsx';
 import FavoritesPage from '../../pages/favorites-page/favorites-page.tsx';
 import OfferPage from '../../pages/offer-page/offer-page.tsx';
@@ -26,7 +26,7 @@ function App({placesCount}: AppProps): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AutStatus.NoAuth}>
+            <PrivateRoute authorizationStatus={AuthStatus.NoAuth}>
               <FavoritesPage/>
             </PrivateRoute>
           }

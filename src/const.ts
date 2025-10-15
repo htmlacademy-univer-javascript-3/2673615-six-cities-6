@@ -10,7 +10,7 @@ export enum AppRoute {
   NotFound = '*'
 }
 
-export enum AutStatus {
+export enum AuthStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN'
