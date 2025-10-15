@@ -6,6 +6,7 @@ export type Offer = {
     title: string;
     placeType: string;
     isPremium: boolean;
+    isFavorite: boolean;
     rating: number;
     price: number;
     bedrooms: number;
