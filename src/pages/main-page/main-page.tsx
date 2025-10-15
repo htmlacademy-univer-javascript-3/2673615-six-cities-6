@@ -1,6 +1,6 @@
 ﻿import Logo from '../../components/logo/logo.tsx';
 import { Offers } from '../../types/offer.ts';
-import PlaceCardsList from '../../components/places-list/places-list.tsx';
+import PlaceCardsList from '../../components/place-cards-list/place-cards-list.tsx';
 
 type MainPageProps = {
   offers: Offers;

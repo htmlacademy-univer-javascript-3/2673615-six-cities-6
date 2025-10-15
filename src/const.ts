@@ -1,12 +1,8 @@
-﻿export const Settings = {
-  PlacesCount: 6
-};
-
-export enum AppRoute {
+﻿export enum AppRoute {
   Root = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Offer = '/offer/:id',
+  Offer = '/offer',
   NotFound = '*'
 }
 

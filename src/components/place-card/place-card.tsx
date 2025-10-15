@@ -1,25 +1,33 @@
 ﻿import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
+import { AppRoute } from '../../const';
 
 type PlaceCardProps = {
   offer: Offer;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }
 
 
-function PlaceCard({offer}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer, onMouseEnter, onMouseLeave}: PlaceCardProps): JSX.Element {
+  const offerUrl = `${AppRoute.Offer}/${offer.id}`;
+
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={offerUrl}>
           <img className="place-card__image" src={offer.previewImage.src} width="260" height="200"
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -41,7 +49,7 @@ function PlaceCard({offer}: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
+          <Link to={offerUrl}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.placeType}</p>
       </div>
