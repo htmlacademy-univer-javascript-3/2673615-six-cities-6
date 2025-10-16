@@ -4,41 +4,37 @@ export const offers: Offers = [
   {
     id: 'de848aec-aaf9-4594-b7f0-c2c8945f9898',
     title: 'Beautiful & luxurious studio at great location',
-    placeType: 'Apartment',
-    location: 'Amsterdam',
-    isPremium: true,
-    isFavorite: false,
-    rating: 4.8,
+    type: 'Apartment',
     price: 120,
-    bedrooms: 3,
-    maxAdults: 4,
-    previewImage: {
-      'src': 'img/apartment-01.jpg'
-    },
-    images: [
-      {
-        'src': 'img/room.jpg'
-      },
-      {
-        'src': 'img/apartment-01.jpg'
-      },
-      {
-        'src': 'img/apartment-02.jpg'
-      },
-      {
-        'src': 'img/apartment-03.jpg'
-      },
-      {
-        'src': 'img/studio-01.jpg'
+    city: {
+      name: 'Amsterdam',
+      location: {
+        latitude: 52.35514938496378,
+        longitude: 4.673877537499948,
+        zoom: 8
       }
-    ],
-    insideItems: ['Wi-Fi', 'Washing machine', 'Towels', 'Heating', 'Coffee machine', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cable TV', 'Fridge'],
+    },
+    location: {
+      latitude: 52.35514938496378,
+      longitude: 4.673877537499948,
+      zoom: 9
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 4.8,
+    previewImage: 'img/apartment-01.jpg',
+    description: 'Very very good place',
+    bedrooms: 3,
+    goods: ['Wi-Fi', 'Washing machine', 'Towels', 'Heating', 'Coffee machine', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cable TV', 'Fridge'],
     host: {
       name: 'Angelina',
-      avatarSrc: 'img/avatar-angelina.jpg',
+      avatarUrl: 'img/avatar-angelina.jpg',
       isPro: true
-    }
+    },
+    images: ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg'],
+    maxAdults: 4,
   },
+  /*
   {
     id: '82dae9d9-ed35-44e5-ab1d-d88f667d841a',
     title: 'Wood and stone place',
@@ -153,4 +149,5 @@ export const offers: Offers = [
       isPro: false
     }
   },
+  */
 ];

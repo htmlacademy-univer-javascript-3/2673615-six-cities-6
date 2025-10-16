@@ -22,7 +22,6 @@ function ReviewForm(){
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    //console.log(formData);
   };
 
   const ratings = [

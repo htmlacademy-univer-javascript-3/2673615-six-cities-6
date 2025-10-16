@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { Offer } from '../../types/offer';
+import { OfferCard } from '../../types/offer';
 import PlaceCardInfo from '../place-card-info/place-card-info';
 
 
 type FavoritePlaceCardProps = {
-    offer: Offer;
+    offer: OfferCard;
 }
 
 function FavoritePlaceCard({offer} : FavoritePlaceCardProps){
@@ -20,7 +20,7 @@ function FavoritePlaceCard({offer} : FavoritePlaceCardProps){
       )}
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to={offerUrl}>
-          <img className="place-card__image" src={offer.previewImage.src} width="150" height="110"alt="Place image"/>
+          <img className="place-card__image" src={offer.previewImage} width="150" height="110"alt="Place image"/>
         </Link>
       </div>
       <div className="favorites__card-info">
@@ -30,7 +30,7 @@ function FavoritePlaceCard({offer} : FavoritePlaceCardProps){
           rating={offer.rating}
           title={offer.title}
           url={offerUrl}
-          placeType={offer.placeType}
+          placeType={offer.type}
         />
       </div>
     </article>

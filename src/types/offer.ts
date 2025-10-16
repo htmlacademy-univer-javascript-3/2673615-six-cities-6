@@ -1,27 +1,42 @@
-import { Image, Images } from './common';
-
-
-export type Offer = {
+export type OfferCard = {
     id: string;
     title: string;
-    placeType: string;
-    location: string;
-    isPremium: boolean;
-    isFavorite: boolean;
-    rating: number;
+    type: string;
     price: number;
+    city: City;
+    location: Location;
+    isFavorite: boolean;
+    isPremium: boolean;
+    rating: number;
+    previewImage: string;
+}
+
+export type Offer = OfferCard & {
+    description: string;
     bedrooms: number;
-    maxAdults: number;
-    previewImage: Image;
-    images: Images;
-    insideItems: string[];
+    goods: string[];
     host: Host;
+    images: string[];
+    maxAdults: number;
 };
 
 export type Host = {
     name: string;
+    avatarUrl: string;
     isPro: boolean;
-    avatarSrc: string;
 };
 
+export type Location = {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+}
+
+export type City = {
+    name: string;
+    location: Location;
+}
+
 export type Offers = Offer[];
+export type OfferCards = OfferCard[];
+
