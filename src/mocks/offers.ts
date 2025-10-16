@@ -19,7 +19,7 @@ export const offers: Offers = [
       longitude: 4.673877537499948,
       zoom: 9
     },
-    isFavorite: false,
+    isFavorite: true,
     isPremium: true,
     rating: 4.8,
     previewImage: 'img/apartment-01.jpg',

@@ -1,9 +1,27 @@
 ﻿import FavoritePlaceCard from '../../components/favorite-place-card/favorite-place-card.tsx';
 import Logo from '../../components/logo/logo.tsx';
-import { offers } from '../../mocks/offers.ts';
-import { Offers } from '../../types/offer.ts';
+import { OfferCards } from '../../types/offer.ts';
 
-function FavoritesPage(): JSX.Element {
+
+function getGroupedFavorites(offers: OfferCards){
+  const grouped = offers.reduce((map, offer) => {
+    if (offer.isFavorite) {
+      const city = offer.city.name;
+      const cityOffers = map.get(city) || [];
+      cityOffers.push(offer);
+      map.set(city, cityOffers);
+    }
+    return map;
+  }, new Map<string, OfferCards>());
+
+  return Array.from(grouped);
+}
+
+type FavoritesPageProps = {
+  offers: OfferCards;
+}
+
+function FavoritesPage({offers}: FavoritesPageProps): JSX.Element {
   return (
     <div className="page">
       <header className="header">
@@ -36,15 +54,7 @@ function FavoritesPage(): JSX.Element {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {Array.from(
-                offers.reduce((map, offer) => {
-                  const city = offer.location;
-                  const cityOffers = map.get(city) || [];
-                  cityOffers.push(offer);
-                  map.set(city, cityOffers);
-                  return map;
-                }, new Map<string, Offers>())
-              ).map(([cityName, cityOffers]) => (
+              {getGroupedFavorites(offers).map(([cityName, cityOffers]) => (
                 <li key={cityName} className="favorites__locations-items">
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">
