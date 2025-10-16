@@ -10,7 +10,7 @@ type PlaceCardInfoProps = {
 }
 
 
-function PlaceCardInfo({price, isFavorite, rating, title, url, placeType}: PlaceCardInfoProps){
+function PlaceCardInfo({price, isFavorite, rating, title, url, placeType}: PlaceCardInfoProps) : JSX.Element{
   return(
     <div className="place-card__info">
       <div className="place-card__price-wrapper">

@@ -7,7 +7,7 @@ type PlacesListProps = {
 }
 
 
-function PlaceCardsList({offers}: PlacesListProps){
+function PlaceCardsList({offers}: PlacesListProps): JSX.Element{
   const [, setActiveOfferId] = useState<string | null>(null);
 
   return(

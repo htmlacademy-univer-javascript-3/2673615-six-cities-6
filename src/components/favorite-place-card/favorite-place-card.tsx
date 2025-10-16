@@ -8,7 +8,7 @@ type FavoritePlaceCardProps = {
     offer: OfferCard;
 }
 
-function FavoritePlaceCard({offer} : FavoritePlaceCardProps){
+function FavoritePlaceCard({offer} : FavoritePlaceCardProps) : JSX.Element{
   const offerUrl = `${AppRoute.Offer}/${offer.id}`;
 
   return (
