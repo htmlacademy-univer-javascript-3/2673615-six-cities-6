@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { City, Offers, Offer } from '../../types/offer.ts';
 import { Point, Points } from '../../types/map.ts';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list.tsx';
+import { PlaceCardLocation } from '../../types/place-card.ts';
 
 type MainPageProps = {
   offers: Offers;
@@ -122,6 +123,7 @@ function MainPage({offers}: MainPageProps): JSX.Element {
               <PlaceCardsList
                 offers={offers}
                 onCardHover={handleCardHover}
+                location={PlaceCardLocation.MainPage}
                 activeOfferId={activeOffer ? activeOffer.id : null}
               />
             </section>
