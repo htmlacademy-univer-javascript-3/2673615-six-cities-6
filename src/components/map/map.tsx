@@ -12,7 +12,7 @@ type MapProps = {
   selectedPoint: Point | null;
 };
 
-function Map(props: MapProps): JSX.Element {
+function Map(props: MapProps) {
   const { city, points, selectedPoint } = props;
 
   const mapRef = useRef(null);
