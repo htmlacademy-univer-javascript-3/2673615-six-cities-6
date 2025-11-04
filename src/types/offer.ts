@@ -15,16 +15,25 @@ export type Offer = OfferCard & {
     description: string;
     bedrooms: number;
     goods: string[];
-    host: Host;
+    host: User;
     images: string[];
     maxAdults: number;
 };
 
-export type Host = {
+export type User = {
     name: string;
     avatarUrl: string;
     isPro: boolean;
 };
+
+export type Review = {
+    id: string;
+    offerId: string;
+    date: string;
+    user: User;
+    comment: string;
+    rating: number;
+}
 
 export type Location = {
     latitude: number;
@@ -39,4 +48,4 @@ export type City = {
 
 export type Offers = Offer[];
 export type OfferCards = OfferCard[];
-
+export type Reviews = Review[];

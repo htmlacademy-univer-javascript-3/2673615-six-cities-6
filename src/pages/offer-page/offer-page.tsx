@@ -3,12 +3,13 @@ import { useState } from 'react';
 import Logo from '../../components/logo/logo.tsx';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list.tsx';
 import ReviewForm from '../../components/review-form/review-form.tsx';
-import { Offers, Offer } from '../../types/offer.ts';
+import { Offers, Offer, Reviews } from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import { Point } from '../../types/map.ts';
 import { MaxNearbyOffers } from '../../const.ts';
 import { PlaceCardLocation } from '../../types/place-card.ts';
+import ReviewList from '../../components/reviews-list/review-list.tsx';
 
 
 function GoodsList({ goods }: { goods: string[] }){
@@ -42,9 +43,10 @@ function OfferGallery({ images }: { images: string[] }) {
 
 type OfferPageProps = {
   offers: Offers;
+  reviews: Reviews;
 }
 
-function OfferPage({offers}: OfferPageProps) {
+function OfferPage({offers, reviews}: OfferPageProps) {
   const { id } = useParams<{ id: string }>();
   const currentOffer = offers.find((item) => item.id === id);
   const [activeNearbyOffer, setActiveNearbyOffer] = useState<Offer | undefined>(undefined);
@@ -168,34 +170,7 @@ function OfferPage({offers}: OfferPageProps) {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54"
-                          alt="Reviews avatar"
-                        />
-                      </div>
-                      <span className="reviews__user-name">
-                        Max
-                      </span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{width: '80%'}}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.
-                        The building is green and from 18th century.
-                      </p>
-                      <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-                    </div>
-                  </li>
-                </ul>
+                <ReviewList reviews={reviews}/>
                 <ReviewForm/>
               </section>
             </div>
