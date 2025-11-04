@@ -33,3 +33,5 @@ export const PlaceCardConfigData: Record<PlaceCardLocation, string> = {
 };
 
 export const MaxNearbyOffers = 3;
+
+export const MaxRating = 5;

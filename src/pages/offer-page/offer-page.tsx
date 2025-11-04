@@ -10,6 +10,7 @@ import { Point } from '../../types/map.ts';
 import { MaxNearbyOffers } from '../../const.ts';
 import { PlaceCardLocation } from '../../types/place-card.ts';
 import ReviewList from '../../components/reviews-list/review-list.tsx';
+import { getRatingWidthPercentage } from '../../utils.ts';
 
 
 function GoodsList({ goods }: { goods: string[] }){
@@ -54,6 +55,8 @@ function OfferPage({offers, reviews}: OfferPageProps) {
   if (!currentOffer){
     return <NotFoundPage/>;
   }
+
+  const currentReviews = reviews.filter((review) => review.offerId === id);
 
   const handleNearbyCardHover = (offerId: string | null) => {
     const activeOffer = offers.find((offer) => offer.id === offerId);
@@ -125,7 +128,7 @@ function OfferPage({offers, reviews}: OfferPageProps) {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: `${currentOffer.rating * 20}%`}}></span>
+                  <span style={{width: getRatingWidthPercentage(currentOffer.rating)}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
@@ -170,7 +173,7 @@ function OfferPage({offers, reviews}: OfferPageProps) {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <ReviewList reviews={reviews}/>
+                <ReviewList reviews={currentReviews}/>
                 <ReviewForm/>
               </section>
             </div>
