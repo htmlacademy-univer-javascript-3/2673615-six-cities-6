@@ -12,7 +12,7 @@ type PlacesListProps = {
 
 function PlaceCardsList({offers, onCardHover, activeOfferId, location}: PlacesListProps): JSX.Element{
   return(
-    <div className="cities__places-list places__list tabs__content">
+    <>
       {offers.map((offer) => (
         <PlaceCard
           key={offer.id}
@@ -23,7 +23,7 @@ function PlaceCardsList({offers, onCardHover, activeOfferId, location}: PlacesLi
           isActive={offer.id === activeOfferId}
         />
       ))}
-    </div>
+    </>
   );
 }
 

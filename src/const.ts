@@ -31,3 +31,5 @@ export const PlaceCardConfigData: Record<PlaceCardLocation, string> = {
   [PlaceCardLocation.MainPage]: 'cities',
   [PlaceCardLocation.OfferPage]: 'near-places'
 };
+
+export const MaxNearbyOffers = 3;

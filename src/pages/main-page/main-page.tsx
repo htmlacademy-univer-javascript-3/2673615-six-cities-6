@@ -120,12 +120,14 @@ function MainPage({offers}: MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlaceCardsList
-                offers={offers}
-                onCardHover={handleCardHover}
-                location={PlaceCardLocation.MainPage}
-                activeOfferId={activeOffer ? activeOffer.id : null}
-              />
+              <div className="cities__places-list places__list tabs__content">
+                <PlaceCardsList
+                  offers={offers}
+                  onCardHover={handleCardHover}
+                  location={PlaceCardLocation.MainPage}
+                  activeOfferId={activeOffer ? activeOffer.id : null}
+                />
+              </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
