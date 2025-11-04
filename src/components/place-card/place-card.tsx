@@ -5,18 +5,27 @@ import PlaceCardInfo from '../place-card-info/place-card-info';
 
 type PlaceCardProps = {
   offer: OfferCard;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
+  onMouseEnter?: (id: string) => void;
+  onMouseLeave?: () => void;
+  isActive?: boolean;
 }
 
 
-function PlaceCard({offer, onMouseEnter, onMouseLeave}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer, onMouseEnter, onMouseLeave, isActive}: PlaceCardProps): JSX.Element {
   const offerUrl = `${AppRoute.Offer}/${offer.id}`;
 
+  const handleMouseEnter = () => {
+    onMouseEnter?.(offer.id);
+  };
+
+  const handleMouseLeave = () => {
+    onMouseLeave?.();
+  };
+
   return (
-    <article className="cities__card place-card"
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+    <article className={`cities__card place-card ${isActive ? 'place-card--active' : ''}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {offer.isPremium && (
         <div className="place-card__mark">

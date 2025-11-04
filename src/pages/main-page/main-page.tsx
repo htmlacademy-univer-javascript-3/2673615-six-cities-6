@@ -1,5 +1,9 @@
 ﻿import Logo from '../../components/logo/logo.tsx';
-import { Offers } from '../../types/offer.ts';
+import Map from '../../components/map/map.tsx';
+import { useState } from 'react';
+
+import { City, Offers, Offer } from '../../types/offer.ts';
+import { Point, Points } from '../../types/map.ts';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list.tsx';
 
 type MainPageProps = {
@@ -7,6 +11,29 @@ type MainPageProps = {
 }
 
 function MainPage({offers}: MainPageProps): JSX.Element {
+  const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
+
+  const city: City | null = offers[0]?.city;
+  const points: Points = offers.map((offer) => ({
+    title: offer.title,
+    lat: offer.location.latitude,
+    lng: offer.location.longitude,
+  }));
+  const selectedPoint: Point | null = activeOffer
+    ? {
+      title: activeOffer.title,
+      lat: activeOffer.location.latitude,
+      lng: activeOffer.location.longitude,
+    }
+    : null;
+
+
+  const handleCardHover = (offerId: string | null) => {
+    const currentOffer = offers.find((offer) => offer.id === offerId);
+    setActiveOffer(currentOffer);
+  };
+
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -76,7 +103,7 @@ function MainPage({offers}: MainPageProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} places to stay in {city.name}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -92,10 +119,20 @@ function MainPage({offers}: MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlaceCardsList offers={offers}/>
+              <PlaceCardsList
+                offers={offers}
+                onCardHover={handleCardHover}
+                activeOfferId={activeOffer ? activeOffer.id : null}
+              />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map
+                  city={city}
+                  points={points}
+                  selectedPoint={selectedPoint}
+                />
+              </section>
             </div>
           </div>
         </div>

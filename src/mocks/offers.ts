@@ -1,5 +1,6 @@
 import { Offers } from '../types/offer';
 
+
 export const offers: Offers = [
   {
     id: 'de848aec-aaf9-4594-b7f0-c2c8945f9898',
@@ -9,15 +10,15 @@ export const offers: Offers = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 52.35514938496378,
-        longitude: 4.673877537499948,
-        zoom: 8
+        latitude: 52.37454,
+        longitude: 4.897976,
+        zoom: 12
       }
     },
     location: {
-      latitude: 52.35514938496378,
-      longitude: 4.673877537499948,
-      zoom: 9
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 16
     },
     isFavorite: true,
     isPremium: true,
@@ -42,15 +43,15 @@ export const offers: Offers = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 52.35514938496378,
-        longitude: 4.673877537499948,
-        zoom: 8
+        latitude: 52.37454,
+        longitude: 4.897976,
+        zoom: 12
       }
     },
     location: {
-      latitude: 53.35514938496378,
-      longitude: 5.673877537499948,
-      zoom: 9
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
+      zoom: 16
     },
     isFavorite: true,
     isPremium: false,
@@ -75,15 +76,15 @@ export const offers: Offers = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 52.35514938496378,
-        longitude: 4.673877537499948,
-        zoom: 8
+        latitude: 52.37454,
+        longitude: 4.897976,
+        zoom: 12
       }
     },
     location: {
-      latitude: 53.35514938496378,
-      longitude: 5.673877537499948,
-      zoom: 9
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+      zoom: 16
     },
     isFavorite: false,
     isPremium: false,
@@ -108,15 +109,15 @@ export const offers: Offers = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 52.35514938496378,
-        longitude: 4.673877537499948,
-        zoom: 8
+        latitude: 52.37454,
+        longitude: 4.897976,
+        zoom: 12
       }
     },
     location: {
-      latitude: 53.35514938496378,
-      longitude: 5.673877537499948,
-      zoom: 9
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+      zoom: 16
     },
     isFavorite: false,
     isPremium: true,

@@ -1,0 +1,59 @@
+import {City} from '../../types/offer.ts';
+import {Point, Points} from '../../types/map.ts';
+import {currentCustomIcon, defaultCustomIcon} from '../../const.ts';
+import {useEffect, useRef} from 'react';
+import useMap from '../../hooks/use-map.tsx';
+import {layerGroup, Marker} from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
+type MapProps = {
+  city: City;
+  points: Points;
+  selectedPoint: Point | null;
+};
+
+function Map(props: MapProps) {
+  const { city, points, selectedPoint } = props;
+
+  const mapRef = useRef(null);
+  const map = useMap(mapRef, city);
+  const markersRef = useRef<Marker[]>([]);
+
+  useEffect(() => {
+    if (map) {
+      const markerLayer = layerGroup().addTo(map);
+
+      markersRef.current = points.map((point) => {
+        const marker = new Marker({
+          lat: point.lat,
+          lng: point.lng
+        });
+        marker.addTo(markerLayer);
+        return marker;
+      });
+
+      return () => {
+        map.removeLayer(markerLayer);
+      };
+    }
+  }, [map, points]);
+
+  useEffect(() => {
+    if (map) {
+      markersRef.current.forEach((marker, index) => {
+        const point = points[index];
+        if (point) {
+          marker.setIcon(
+            selectedPoint && point.title === selectedPoint.title
+              ? currentCustomIcon
+              : defaultCustomIcon
+          );
+        }
+      });
+    }
+  }, [map, points, selectedPoint]);
+
+  return <div style={{height: '100%'}} ref={mapRef}></div>;
+}
+
+export default Map;
