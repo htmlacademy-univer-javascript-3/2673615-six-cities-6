@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { City, Offers, Offer } from '../../types/offer.ts';
 import { Point, Points } from '../../types/map.ts';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list.tsx';
+import { PlaceCardLocation } from '../../types/place-card.ts';
 
 type MainPageProps = {
   offers: Offers;
@@ -119,11 +120,14 @@ function MainPage({offers}: MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlaceCardsList
-                offers={offers}
-                onCardHover={handleCardHover}
-                activeOfferId={activeOffer ? activeOffer.id : null}
-              />
+              <div className="cities__places-list places__list tabs__content">
+                <PlaceCardsList
+                  offers={offers}
+                  onCardHover={handleCardHover}
+                  location={PlaceCardLocation.MainPage}
+                  activeOfferId={activeOffer ? activeOffer.id : null}
+                />
+              </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">

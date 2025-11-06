@@ -6,13 +6,14 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page.tsx';
 import OfferPage from '../../pages/offer-page/offer-page.tsx';
 import NotFoundPage from '../../pages/not-found-page/not-found-page.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
-import { Offers } from '../../types/offer.ts';
+import { Offers, Reviews } from '../../types/offer.ts';
 
 type AppProps = {
   offers: Offers;
+  reviews: Reviews;
 }
 
-function App({offers}: AppProps): JSX.Element {
+function App({offers, reviews}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -34,7 +35,7 @@ function App({offers}: AppProps): JSX.Element {
         />
         <Route
           path={`${AppRoute.Offer}/:id`}
-          element={<OfferPage offers={offers}/>}
+          element={<OfferPage offers={offers} reviews={reviews}/>}
         />
         <Route
           path={AppRoute.NotFound}
