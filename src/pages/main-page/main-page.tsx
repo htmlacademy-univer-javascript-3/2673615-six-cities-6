@@ -7,14 +7,18 @@ import { Point, Points } from '../../types/map.ts';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list.tsx';
 import { PlaceCardLocation } from '../../types/place-card.ts';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.ts';
-import { changeCity } from '../../store/action.ts';
+import { changeCity, setSortingOption } from '../../store/action.ts';
 import CitiesList from '../../components/cities-list/cities-list.tsx';
+import SortingOptions from '../../components/sorting-options/sorting-options.tsx';
+import { SortingOption } from '../../const.ts';
 
 
 function MainPage() {
   const dispatch = useAppDispatch();
 
   const currentCity = useAppSelector((state) => state.city);
+  const currentSortingOption = useAppSelector((state) => state.sortingOption);
+
   const allOffers = useAppSelector((state) => state.offers);
 
   const offers = useMemo(
@@ -37,6 +41,18 @@ function MainPage() {
     }
     : null;
 
+  const sortedOffers = useMemo(() => {
+    switch (currentSortingOption) {
+      case SortingOption.PriceLowToHigh:
+        return [...offers].sort((x, y) => x.price - y.price);
+      case SortingOption.PriceHighToLow:
+        return [...offers].sort((x, y) => y.price - x.price);
+      case SortingOption.TopRatedFirst:
+        return [...offers].sort((x, y) => y.rating - x.rating);
+      default:
+        return offers;
+    }
+  }, [currentSortingOption, offers]);
 
   const handleCardHover = (offerId: string | null) => {
     const currentOffer = offers.find((offer) => offer.id === offerId);
@@ -45,6 +61,10 @@ function MainPage() {
 
   const handleCityChange = (newCity: City) => {
     dispatch(changeCity(newCity));
+  };
+
+  const handleSortingOptionChange = (newSortingOption: SortingOption) => {
+    dispatch(setSortingOption(newSortingOption));
   };
 
 
@@ -83,24 +103,13 @@ function MainPage() {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offers.length} places to stay in {currentCity.name}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
-              </form>
+              <SortingOptions
+                activeSortingOption={currentSortingOption}
+                onSortingOptionChange={handleSortingOptionChange}
+              />
               <div className="cities__places-list places__list tabs__content">
                 <PlaceCardsList
-                  offers={offers}
+                  offers={sortedOffers}
                   onCardHover={handleCardHover}
                   location={PlaceCardLocation.MainPage}
                   activeOfferId={activeOffer ? activeOffer.id : null}
