@@ -15,13 +15,13 @@ export enum AuthStatus {
   Unknown = 'UNKNOWN'
 }
 
-export const DefaultCustomIcon = leaflet.icon({
+export const DEFAULT_CUSTOM_ICON = leaflet.icon({
   iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
 
-export const CurrentCustomIcon = leaflet.icon({
+export const CURRENT_CUSTOM_ICON = leaflet.icon({
   iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg',
   iconSize: [40, 40],
   iconAnchor: [20, 40],
@@ -32,9 +32,9 @@ export const PlaceCardConfigData: Record<PlaceCardLocation, string> = {
   [PlaceCardLocation.OfferPage]: 'near-places'
 };
 
-export const MaxNearbyOffers = 3;
+export const MAX_NEARBY_OFFERS = 3;
 
-export const MaxRating = 5;
+export const MAX_RATING = 5;
 
 export const CITIES = [
   {
@@ -85,4 +85,5 @@ export const CITIES = [
       'zoom': 13
     }
   }];
+
 export const INITIAL_CITY = CITIES[0];

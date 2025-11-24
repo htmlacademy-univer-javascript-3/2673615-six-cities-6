@@ -7,7 +7,7 @@ import { Offer } from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import { Point } from '../../types/map.ts';
-import { MaxNearbyOffers } from '../../const.ts';
+import { MAX_NEARBY_OFFERS } from '../../const.ts';
 import { PlaceCardLocation } from '../../types/place-card.ts';
 import ReviewList from '../../components/reviews-list/review-list.tsx';
 import { getRatingWidthPercentage } from '../../utils.ts';
@@ -65,7 +65,7 @@ function OfferPage() {
 
   const nearbyOffers = offers
     .filter((offer) => offer.city.name === currentOffer.city.name && offer.id !== currentOffer.id)
-    .slice(0, MaxNearbyOffers);
+    .slice(0, MAX_NEARBY_OFFERS);
 
   const points: Point[] = nearbyOffers.map((offer) => ({
     title: offer.title,
