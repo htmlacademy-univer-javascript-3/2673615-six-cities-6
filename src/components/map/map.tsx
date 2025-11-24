@@ -1,6 +1,6 @@
 import {City} from '../../types/offer.ts';
 import {Point, Points} from '../../types/map.ts';
-import {CurrentCustomIcon, DefaultCustomIcon} from '../../const.ts';
+import {CURRENT_CUSTOM_ICON, DEFAULT_CUSTOM_ICON} from '../../const.ts';
 import {useEffect, useRef} from 'react';
 import useMap from '../../hooks/use-map.tsx';
 import {layerGroup, Marker} from 'leaflet';
@@ -43,8 +43,8 @@ function Map({ city, points, selectedPoint }: MapProps) {
         if (point) {
           marker.setIcon(
             selectedPoint && point.title === selectedPoint.title
-              ? CurrentCustomIcon
-              : DefaultCustomIcon
+              ? CURRENT_CUSTOM_ICON
+              : DEFAULT_CUSTOM_ICON
           );
         }
       });
