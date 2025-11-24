@@ -38,7 +38,7 @@ function App() {
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainPage />}
+          element={<MainPage/>}
         />
         <Route
           path={AppRoute.Login}
@@ -48,13 +48,13 @@ function App() {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute authorizationStatus={AuthStatus.Auth}>
-              <FavoritesPage offers={offers}/>
+              <FavoritesPage/>
             </PrivateRoute>
           }
         />
         <Route
           path={`${AppRoute.Offer}/:id`}
-          element={<OfferPage offers={offers} reviews={reviews}/>}
+          element={<OfferPage/>}
         />
         <Route
           path={AppRoute.NotFound}

@@ -1,5 +1,6 @@
 ﻿import FavoritePlaceCard from '../../components/favorite-place-card/favorite-place-card.tsx';
 import Logo from '../../components/logo/logo.tsx';
+import { useAppSelector } from '../../hooks/store.ts';
 import { OfferCards } from '../../types/offer.ts';
 
 
@@ -17,11 +18,9 @@ function getGroupedFavorites(offers: OfferCards){
   return Array.from(grouped);
 }
 
-type FavoritesPageProps = {
-  offers: OfferCards;
-}
+function FavoritesPage() {
+  const offers = useAppSelector((state) => state.offers);
 
-function FavoritesPage({offers}: FavoritesPageProps): JSX.Element {
   return (
     <div className="page">
       <header className="header">

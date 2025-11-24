@@ -11,7 +11,7 @@ import { changeCity } from '../../store/action.ts';
 import CitiesList from '../../components/cities-list/cities-list.tsx';
 
 
-function MainPage(): JSX.Element {
+function MainPage() {
   const dispatch = useAppDispatch();
 
   const currentCity = useAppSelector((state) => state.city);

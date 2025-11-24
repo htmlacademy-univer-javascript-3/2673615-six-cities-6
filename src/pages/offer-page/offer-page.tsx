@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Logo from '../../components/logo/logo.tsx';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list.tsx';
 import ReviewForm from '../../components/review-form/review-form.tsx';
-import { Offers, Offer, Reviews } from '../../types/offer.ts';
+import { Offer } from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import { Point } from '../../types/map.ts';
@@ -11,6 +11,7 @@ import { MaxNearbyOffers } from '../../const.ts';
 import { PlaceCardLocation } from '../../types/place-card.ts';
 import ReviewList from '../../components/reviews-list/review-list.tsx';
 import { getRatingWidthPercentage } from '../../utils.ts';
+import { useAppSelector } from '../../hooks/store.ts';
 
 
 function GoodsList({ goods }: { goods: string[] }){
@@ -42,13 +43,12 @@ function OfferGallery({ images }: { images: string[] }) {
   );
 }
 
-type OfferPageProps = {
-  offers: Offers;
-  reviews: Reviews;
-}
-
-function OfferPage({offers, reviews}: OfferPageProps) {
+function OfferPage() {
   const { id } = useParams<{ id: string }>();
+
+  const offers = useAppSelector((state) => state.offers);
+  const reviews = useAppSelector((state) => state.reviews);
+
   const currentOffer = offers.find((item) => item.id === id);
   const [activeNearbyOffer, setActiveNearbyOffer] = useState<Offer | undefined>(undefined);
 
