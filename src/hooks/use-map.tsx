@@ -7,15 +7,7 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): Map |
   const isRendered = useRef(false);
 
   useEffect(() => {
-    if (mapRef.current === null) {
-      return;
-    }
-
-    if (isRendered.current && map) {
-      map.setView(
-        [city.location.latitude, city.location.longitude],
-        city.location.zoom
-      );
+    if (mapRef.current === null || isRendered.current) {
       return;
     }
 
@@ -38,8 +30,16 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): Map |
 
     setMap(instance);
     isRendered.current = true;
+  }, [mapRef, city]);
 
-  }, [mapRef, city, map]);
+  useEffect(() => {
+    if (map) {
+      map.setView(
+        [city.location.latitude, city.location.longitude],
+        city.location.zoom
+      );
+    }
+  }, [map, city]);
 
   return map;
 }
