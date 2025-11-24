@@ -85,4 +85,4 @@ export const CITIES = [
       'zoom': 13
     }
   }];
-export const INITIAL_CITY = CITIES[0];
+export const INITIAL_CITY = CITIES[3];

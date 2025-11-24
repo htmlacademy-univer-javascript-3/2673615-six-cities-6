@@ -1,3 +1,4 @@
+import { CITIES } from '../const';
 import { Offers } from '../types/offer';
 
 
@@ -7,14 +8,7 @@ export const offers: Offers = [
     title: 'Beautiful & luxurious studio at great location',
     type: 'Apartment',
     price: 120,
-    city: {
-      name: 'Amsterdam',
-      location: {
-        latitude: 52.37454,
-        longitude: 4.897976,
-        zoom: 12
-      }
-    },
+    city: CITIES[3],
     location: {
       latitude: 52.3909553943508,
       longitude: 4.85309666406198,
@@ -40,14 +34,7 @@ export const offers: Offers = [
     title: 'Wood and stone place',
     type: 'Apartment',
     price: 80,
-    city: {
-      name: 'Amsterdam',
-      location: {
-        latitude: 52.37454,
-        longitude: 4.897976,
-        zoom: 12
-      }
-    },
+    city: CITIES[3],
     location: {
       latitude: 52.3609553943508,
       longitude: 4.85309666406198,
@@ -73,14 +60,7 @@ export const offers: Offers = [
     title: 'Nice, cozy, warm big bed',
     type: 'Room',
     price: 150,
-    city: {
-      name: 'Amsterdam',
-      location: {
-        latitude: 52.37454,
-        longitude: 4.897976,
-        zoom: 12
-      }
-    },
+    city: CITIES[3],
     location: {
       latitude: 52.3909553943508,
       longitude: 4.929309666406198,
@@ -106,14 +86,7 @@ export const offers: Offers = [
     title: 'Nice!',
     type: 'Apartment',
     price: 30,
-    city: {
-      name: 'Amsterdam',
-      location: {
-        latitude: 52.37454,
-        longitude: 4.897976,
-        zoom: 12
-      }
-    },
+    city: CITIES[3],
     location: {
       latitude: 52.3809553943508,
       longitude: 4.939309666406198,

@@ -1,20 +1,29 @@
 ﻿import Logo from '../../components/logo/logo.tsx';
 import Map from '../../components/map/map.tsx';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
-import { City, Offers, Offer } from '../../types/offer.ts';
+import { City, Offer } from '../../types/offer.ts';
 import { Point, Points } from '../../types/map.ts';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list.tsx';
 import { PlaceCardLocation } from '../../types/place-card.ts';
+import { useAppDispatch, useAppSelector } from '../../hooks/store.ts';
+import { changeCity } from '../../store/action.ts';
+import CitiesList from '../../components/cities-list/cities-list.tsx';
 
-type MainPageProps = {
-  offers: Offers;
-}
 
-function MainPage({offers}: MainPageProps): JSX.Element {
+function MainPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const currentCity = useAppSelector((state) => state.city);
+  const allOffers = useAppSelector((state) => state.offers);
+
+  const offers = useMemo(
+    () => allOffers.filter((offer) => offer.city === currentCity),
+    [currentCity, allOffers]
+  );
+
   const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
 
-  const city: City | null = offers[0]?.city;
   const points: Points = offers.map((offer) => ({
     title: offer.title,
     lat: offer.location.latitude,
@@ -32,6 +41,10 @@ function MainPage({offers}: MainPageProps): JSX.Element {
   const handleCardHover = (offerId: string | null) => {
     const currentOffer = offers.find((offer) => offer.id === offerId);
     setActiveOffer(currentOffer);
+  };
+
+  const handleCityChange = (newCity: City) => {
+    dispatch(changeCity(newCity));
   };
 
 
@@ -64,47 +77,12 @@ function MainPage({offers}: MainPageProps): JSX.Element {
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
+        <CitiesList activeCity={currentCity} onCityChange={handleCityChange}/>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in {city.name}</b>
+              <b className="places__found">{offers.length} places to stay in {currentCity.name}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -132,7 +110,7 @@ function MainPage({offers}: MainPageProps): JSX.Element {
             <div className="cities__right-section">
               <section className="cities__map map">
                 <Map
-                  city={city}
+                  city={currentCity}
                   points={points}
                   selectedPoint={selectedPoint}
                 />
