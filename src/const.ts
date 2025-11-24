@@ -15,16 +15,23 @@ export enum AuthStatus {
   Unknown = 'UNKNOWN'
 }
 
+export enum SortingOption {
+  Popular = 'Popular',
+  PriceLowToHigh = 'Price: low to high',
+  PriceHighToLow = 'Price: high to low',
+  TopRatedFirst = 'Top rated first'
+}
+
 export const DEFAULT_CUSTOM_ICON = leaflet.icon({
-  iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconUrl: 'img/pin.svg',
+  iconSize: [27, 39],
+  iconAnchor: [13, 39],
 });
 
 export const CURRENT_CUSTOM_ICON = leaflet.icon({
-  iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconUrl: 'img/pin-active.svg',
+  iconSize: [27, 39],
+  iconAnchor: [13, 39],
 });
 
 export const PlaceCardConfigData: Record<PlaceCardLocation, string> = {
