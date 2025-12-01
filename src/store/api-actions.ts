@@ -5,7 +5,7 @@ import { loadOffers, redirectToRoute, requireAuthorization, setAppUser, setOffer
 import { ApiRoute, AppRoute, AuthStatus } from '../const';
 import { OfferCards } from '../types/offer';
 import { AppUser, AppUserLoginData } from '../types/user';
-import { saveToken } from '../service/token';
+import { dropToken, saveToken } from '../service/token';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -54,3 +54,19 @@ export const loginAction = createAsyncThunk<void, AppUserLoginData, {
     dispatch(redirectToRoute(AppRoute.Root));
   },
 );
+
+export const logoutAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'appUser/logout',
+  async (_arg, {dispatch, extra: api}) => {
+    await api.delete<AppUser>(ApiRoute.Logout);
+    dropToken();
+
+    dispatch(requireAuthorization(AuthStatus.NoAuth));
+    dispatch(setAppUser(null));
+  },
+);
+

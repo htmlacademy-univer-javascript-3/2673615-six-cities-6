@@ -1,11 +1,19 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthStatus } from '../../const';
-import { useAppSelector } from '../../hooks/store';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import Logo from '../logo/logo';
+import { logoutAction } from '../../store/api-actions';
 
 function Header(){
+  const dispatch = useAppDispatch();
+
   const user = useAppSelector((state) => state.appUser);
   const authStatus = useAppSelector((state) => state.authStatus);
+
+  const handleSignOut = (evt: React.MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
+    dispatch(logoutAction());
+  };
 
   return (
     <header className="header">
@@ -30,7 +38,7 @@ function Header(){
                     </Link>
                   </li>
                   <li className="header__nav-item">
-                    <a className="header__nav-link" href="#">
+                    <a className="header__nav-link" href="#" onClick={handleSignOut}>
                       <span className="header__signout">Sign out</span>
                     </a>
                   </li>
