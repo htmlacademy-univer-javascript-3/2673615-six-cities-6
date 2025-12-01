@@ -2,12 +2,12 @@
 import Map from '../../components/map/map.tsx';
 import { useMemo, useState } from 'react';
 
-import { City, Offer } from '../../types/offer.ts';
+import { City, OfferCard } from '../../types/offer.ts';
 import { Point, Points } from '../../types/map.ts';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list.tsx';
 import { PlaceCardLocation } from '../../types/place-card.ts';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.ts';
-import { changeCity, setSortingOption } from '../../store/action.ts';
+import { changeCity, setSortingOption } from '../../store/actions.ts';
 import CitiesList from '../../components/cities-list/cities-list.tsx';
 import SortingOptions from '../../components/sorting-options/sorting-options.tsx';
 import { SortingOption } from '../../const.ts';
@@ -22,19 +22,22 @@ function MainPage() {
   const allOffers = useAppSelector((state) => state.offers);
 
   const offers = useMemo(
-    () => allOffers.filter((offer) => offer.city === currentCity),
+    () => allOffers.filter((offer) => offer.city.name === currentCity.name),
     [currentCity, allOffers]
   );
 
-  const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
+  const [activeOffer, setActiveOffer] = useState<OfferCard | undefined>(undefined);
 
   const points: Points = offers.map((offer) => ({
+    id: offer.id,
     title: offer.title,
     lat: offer.location.latitude,
     lng: offer.location.longitude,
   }));
+
   const selectedPoint: Point | null = activeOffer
     ? {
+      id: activeOffer.id,
       title: activeOffer.title,
       lat: activeOffer.location.latitude,
       lng: activeOffer.location.longitude,
