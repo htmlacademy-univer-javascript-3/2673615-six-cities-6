@@ -94,3 +94,7 @@ export const CITIES = [
   }];
 
 export const INITIAL_CITY = CITIES[0];
+
+export const BACKEND_URL = 'https://14.design.htmlacademy.pro/six-cities';
+export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
+export const REQUEST_TIMEOUT = 5000;
