@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { AppDispatch, State } from '../types/store';
-import { loadOffers, requireAuthorization, setAppUser, setOffersLoadingStatus } from './actions';
-import { ApiRoute, AuthStatus } from '../const';
+import { loadOffers, redirectToRoute, requireAuthorization, setAppUser, setOffersLoadingStatus } from './actions';
+import { ApiRoute, AppRoute, AuthStatus } from '../const';
 import { OfferCards } from '../types/offer';
-import { AppUser } from '../types/user';
+import { AppUser, AppUserLoginData } from '../types/user';
+import { saveToken } from '../service/token';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -35,5 +36,21 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
       dispatch(requireAuthorization(AuthStatus.NoAuth));
       dispatch(setAppUser(null));
     }
+  },
+);
+
+export const loginAction = createAsyncThunk<void, AppUserLoginData, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'appUser/login',
+  async ({email, password}, {dispatch, extra: api}) => {
+    const {data} = await api.post<AppUser>(ApiRoute.Login, {email, password});
+    saveToken(data.token);
+
+    dispatch(requireAuthorization(AuthStatus.Auth));
+    dispatch(setAppUser(data));
+    dispatch(redirectToRoute(AppRoute.Root));
   },
 );

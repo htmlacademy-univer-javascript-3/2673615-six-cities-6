@@ -1,5 +1,5 @@
 ﻿import MainPage from '../../pages/main-page/main-page.tsx';
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthStatus} from '../../const.ts';
 import LoginPage from '../../pages/login-page/login-page.tsx';
 import FavoritesPage from '../../pages/favorites-page/favorites-page.tsx';
@@ -12,24 +12,28 @@ import {useDispatch} from 'react-redux';
 import { reviews } from '../../mocks/reviews.ts';
 import Loader from '../loader/loader.tsx';
 import { useAppSelector } from '../../hooks/store.ts';
+import HistoryRouter from '../history-router/history-router.tsx';
+import browserHistory from '../../browser-history.ts';
 
 
 function App() {
   const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
+  const authStatus = useAppSelector((state) => state.authStatus);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadReviews(reviews));
   }, [dispatch]);
 
-  if (isOffersLoading) {
+  if (isOffersLoading || authStatus === AuthStatus.Unknown) {
     return (
       <Loader />
     );
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory} >
       <Routes>
         <Route
           path={AppRoute.Root}
@@ -42,7 +46,7 @@ function App() {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AuthStatus.Auth}>
+            <PrivateRoute>
               <FavoritesPage/>
             </PrivateRoute>
           }
@@ -56,7 +60,7 @@ function App() {
           element={<NotFoundPage/>}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 
