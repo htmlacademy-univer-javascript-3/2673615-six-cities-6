@@ -10,7 +10,8 @@ export enum AppRoute {
 }
 
 export enum ApiRoute {
-  Offers = '/offers'
+  Offers = '/offers',
+  Login = '/login'
 }
 
 export enum AuthStatus {

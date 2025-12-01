@@ -1,3 +1,5 @@
+import { User } from './user';
+
 export type OfferCard = {
     id: string;
     title: string;
@@ -18,12 +20,6 @@ export type Offer = OfferCard & {
     host: User;
     images: string[];
     maxAdults: number;
-};
-
-export type User = {
-    name: string;
-    avatarUrl: string;
-    isPro: boolean;
 };
 
 export type Review = {

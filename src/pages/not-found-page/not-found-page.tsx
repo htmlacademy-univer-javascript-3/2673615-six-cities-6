@@ -1,18 +1,12 @@
-﻿import Logo from '../../components/logo/logo.tsx';
-import Styles from './not-found-page.module.css';
+﻿import Styles from './not-found-page.module.css';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const.ts';
+import Header from '../../components/header/header.tsx';
 
 function NotFoundPage(): JSX.Element {
   return (
     <div className="page page--gray">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <Logo/>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="page__main">
         <div className={`container ${Styles.container}`}>
