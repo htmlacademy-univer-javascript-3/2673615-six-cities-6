@@ -8,7 +8,7 @@ const initialState = {
   offers: [] as OfferCards,
   reviews: [] as Reviews,
   sortingOption: SortingOption.Popular,
-  OffersLoadingStatus: false
+  isOffersLoading: false
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -26,6 +26,6 @@ export const reducer = createReducer(initialState, (builder) => {
       state.sortingOption = action.payload;
     })
     .addCase(setOffersLoadingStatus, (state, action) => {
-      state.OffersLoadingStatus = action.payload;
+      state.isOffersLoading = action.payload;
     });
 });

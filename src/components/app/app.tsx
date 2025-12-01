@@ -10,15 +10,23 @@ import {loadReviews} from '../../store/actions.ts';
 import { useEffect } from 'react';
 import {useDispatch} from 'react-redux';
 import { reviews } from '../../mocks/reviews.ts';
+import Loader from '../loader/loader.tsx';
+import { useAppSelector } from '../../hooks/store.ts';
 
 
 function App() {
+  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadReviews(reviews));
   }, [dispatch]);
 
+  if (isOffersLoading) {
+    return (
+      <Loader />
+    );
+  }
 
   return (
     <BrowserRouter>
