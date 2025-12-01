@@ -1,17 +1,18 @@
 ﻿import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list.tsx';
 import ReviewForm from '../../components/review-form/review-form.tsx';
-import { Offer } from '../../types/offer.ts';
+import { OfferCard } from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import { Point } from '../../types/map.ts';
-import { MAX_NEARBY_OFFERS } from '../../const.ts';
 import { PlaceCardLocation } from '../../types/place-card.ts';
 import ReviewList from '../../components/reviews-list/review-list.tsx';
 import { getRatingWidthPercentage } from '../../utils.ts';
-import { useAppSelector } from '../../hooks/store.ts';
+import { useAppDispatch, useAppSelector } from '../../hooks/store.ts';
 import Header from '../../components/header/header.tsx';
+import { fetchOfferAction } from '../../store/api-actions.ts';
+import Loader from '../../components/loader/loader.tsx';
 
 
 function GoodsList({ goods }: { goods: string[] }){
@@ -45,12 +46,25 @@ function OfferGallery({ images }: { images: string[] }) {
 
 function OfferPage() {
   const { id } = useParams<{ id: string }>();
+  const dispatch = useAppDispatch();
 
-  const offers = useAppSelector((state) => state.offers);
   const reviews = useAppSelector((state) => state.reviews);
 
-  const currentOffer = offers.find((item) => item.id === id);
-  const [activeNearbyOffer, setActiveNearbyOffer] = useState<Offer | undefined>(undefined);
+  const isOfferLoading = useAppSelector((state) => state.isOfferLoading);
+  const currentOffer = useAppSelector((state) => state.offer);
+  const nearbyOffers = useAppSelector((state) => state.offers);
+  const [activeNearbyOffer, setActiveNearbyOffer] = useState<OfferCard | undefined>(undefined);
+
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchOfferAction(id));
+    }
+  }, [id, dispatch]);
+
+  if (isOfferLoading) {
+    return <Loader />;
+  }
 
   if (!currentOffer){
     return <NotFoundPage/>;
@@ -59,15 +73,12 @@ function OfferPage() {
   const currentReviews = reviews.filter((review) => review.offerId === id);
 
   const handleNearbyCardHover = (offerId: string | null) => {
-    const activeOffer = offers.find((offer) => offer.id === offerId);
+    const activeOffer = nearbyOffers.find((offer) => offer.id === offerId);
     setActiveNearbyOffer(activeOffer);
   };
 
-  const nearbyOffers = offers
-    .filter((offer) => offer.city.name === currentOffer.city.name && offer.id !== currentOffer.id)
-    .slice(0, MAX_NEARBY_OFFERS);
-
   const points: Point[] = nearbyOffers.map((offer) => ({
+    id: offer.id,
     title: offer.title,
     lat: offer.location.latitude,
     lng: offer.location.longitude,
@@ -75,6 +86,7 @@ function OfferPage() {
 
   const selectedPoint: Point | null = activeNearbyOffer
     ? {
+      id: activeNearbyOffer.id,
       title: activeNearbyOffer.title,
       lat: activeNearbyOffer.location.latitude,
       lng: activeNearbyOffer.location.longitude,

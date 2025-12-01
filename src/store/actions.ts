@@ -1,5 +1,5 @@
 import {createAction} from '@reduxjs/toolkit';
-import { City, OfferCards, Reviews } from '../types/offer';
+import { City, Offer, OfferCards, Reviews } from '../types/offer';
 import { AppRoute, AuthStatus, SortingOption } from '../const';
 import { AppUser } from '../types/user';
 
@@ -10,6 +10,8 @@ export const loadReviews = createAction<Reviews>('app/loadReviews');
 export const setSortingOption = createAction<SortingOption>('app/setSortingOption');
 export const setOffersLoadingStatus = createAction<boolean>('app/setOffersLoadingStatus');
 export const redirectToRoute = createAction<AppRoute>('app/redirectToRoute');
+export const setOfferLoadingStatus = createAction<boolean>('app/setOfferLoadingStatus');
+export const loadOffer = createAction<Offer>('app/loadOffer');
 
 export const requireAuthorization = createAction<AuthStatus>('appUser/requireAuthorization');
 export const setAppUser = createAction<AppUser | null>('appUser/set');
