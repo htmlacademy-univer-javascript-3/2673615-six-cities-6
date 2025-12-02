@@ -5,7 +5,6 @@ type ReviewListProps = {
     reviews: Reviews;
 }
 
-
 function ReviewList({reviews}:ReviewListProps){
   return (
     <>

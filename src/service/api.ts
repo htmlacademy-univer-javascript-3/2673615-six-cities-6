@@ -44,7 +44,7 @@ export const createAPI = (): AxiosInstance => {
         const detailMessage = (error.response.data);
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        toast.warn(detailMessage.message);
+        toast.warn(detailMessage.message, {toastId: detailMessage.message});
       }
 
       throw error;

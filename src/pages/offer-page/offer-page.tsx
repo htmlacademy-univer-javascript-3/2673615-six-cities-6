@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/store.ts';
 import Header from '../../components/header/header.tsx';
 import { fetchOfferAction } from '../../store/api-actions.ts';
 import Loader from '../../components/loader/loader.tsx';
+import { MAX_COMMENT_COUNT } from '../../const.ts';
 
 
 function GoodsList({ goods }: { goods: string[] }){
@@ -48,13 +49,15 @@ function OfferPage() {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
 
-  const reviews = useAppSelector((state) => state.reviews);
 
   const isOfferLoading = useAppSelector((state) => state.isOfferLoading);
   const currentOffer = useAppSelector((state) => state.offer);
-  const nearbyOffers = useAppSelector((state) => state.offers);
-  const [activeNearbyOffer, setActiveNearbyOffer] = useState<OfferCard | undefined>(undefined);
+  const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
+  const reviews = useAppSelector((state) => [...state.reviews]
+    .sort((x, y) => new Date(y.date).getTime() - new Date(x.date).getTime())
+    .slice(0, MAX_COMMENT_COUNT));
 
+  const [activeNearbyOffer, setActiveNearbyOffer] = useState<OfferCard | undefined>(undefined);
 
   useEffect(() => {
     if (id) {
@@ -69,8 +72,6 @@ function OfferPage() {
   if (!currentOffer){
     return <NotFoundPage/>;
   }
-
-  const currentReviews = reviews.filter((review) => review.offerId === id);
 
   const handleNearbyCardHover = (offerId: string | null) => {
     const activeOffer = nearbyOffers.find((offer) => offer.id === offerId);
@@ -162,8 +163,8 @@ function OfferPage() {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <ReviewList reviews={currentReviews}/>
-                <ReviewForm/>
+                <ReviewList reviews={reviews}/>
+                <ReviewForm offerId={currentOffer.id}/>
               </section>
             </div>
           </div>
