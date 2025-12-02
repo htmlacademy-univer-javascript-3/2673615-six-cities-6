@@ -106,4 +106,6 @@ export const BACKEND_URL = 'https://14.design.htmlacademy.pro/six-cities';
 export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 export const REQUEST_TIMEOUT = 5000;
 
-export const MAX_COMMENT_COUNT = 10;
+export const MAX_REVIEW_COUNT = 10;
+export const MIN_REVIEW_LENGTH = 50;
+export const MAX_REVIEW_LENGTH = 300;

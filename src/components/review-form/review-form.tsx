@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { addReviewAction } from '../../store/api-actions';
+import { MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH } from '../../const';
 
 type ReviewFormProps = {
   offerId: string;
@@ -31,8 +32,18 @@ function ReviewForm({offerId}: ReviewFormProps){
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(addReviewAction({...formData, offerId: offerId}));
+    dispatch(addReviewAction({...formData, offerId}))
+      .unwrap()
+      .then(() => {
+        setFormData({
+          rating: 0,
+          comment: ''
+        });
+      })
+      .catch(() => {});
   };
+
+  const isFormValid = formData.rating !== 0 && formData.comment.length >= MIN_REVIEW_LENGTH && formData.comment.length <= MAX_REVIEW_LENGTH;
 
   const ratings = [
     { value: 5, title: 'perfect' },
@@ -90,7 +101,7 @@ function ReviewForm({offerId}: ReviewFormProps){
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={isPosting}
+          disabled={isPosting || !isFormValid}
         >
           Submit
         </button>
