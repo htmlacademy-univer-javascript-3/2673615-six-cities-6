@@ -1,6 +1,6 @@
 ﻿import { Link } from 'react-router-dom';
 import { OfferCard } from '../../types/offer';
-import { AppRoute, PlaceCardConfigData } from '../../const';
+import { AppRoute, PLACE_CARD_CONFIG_DATA } from '../../const';
 import PlaceCardInfo from '../place-card-info/place-card-info';
 import { PlaceCardLocation } from '../../types/place-card';
 
@@ -15,7 +15,7 @@ type PlaceCardProps = {
 
 function PlaceCard({offer, location, onMouseEnter, onMouseLeave, isActive}: PlaceCardProps): JSX.Element {
   const offerUrl = `${AppRoute.Offer}/${offer.id}`;
-  const className = PlaceCardConfigData[location];
+  const className = PLACE_CARD_CONFIG_DATA[location];
 
   const handleMouseEnter = () => {
     onMouseEnter?.(offer.id);

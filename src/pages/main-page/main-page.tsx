@@ -1,16 +1,16 @@
-﻿import Logo from '../../components/logo/logo.tsx';
-import Map from '../../components/map/map.tsx';
+﻿import Map from '../../components/map/map.tsx';
 import { useMemo, useState } from 'react';
 
-import { City, Offer } from '../../types/offer.ts';
+import { City, OfferCard } from '../../types/offer.ts';
 import { Point, Points } from '../../types/map.ts';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list.tsx';
 import { PlaceCardLocation } from '../../types/place-card.ts';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.ts';
-import { changeCity, setSortingOption } from '../../store/action.ts';
+import { changeCity, setSortingOption } from '../../store/actions.ts';
 import CitiesList from '../../components/cities-list/cities-list.tsx';
 import SortingOptions from '../../components/sorting-options/sorting-options.tsx';
 import { SortingOption } from '../../const.ts';
+import Header from '../../components/header/header.tsx';
 
 
 function MainPage() {
@@ -22,19 +22,22 @@ function MainPage() {
   const allOffers = useAppSelector((state) => state.offers);
 
   const offers = useMemo(
-    () => allOffers.filter((offer) => offer.city === currentCity),
+    () => allOffers.filter((offer) => offer.city.name === currentCity.name),
     [currentCity, allOffers]
   );
 
-  const [activeOffer, setActiveOffer] = useState<Offer | undefined>(undefined);
+  const [activeOffer, setActiveOffer] = useState<OfferCard | undefined>(undefined);
 
   const points: Points = offers.map((offer) => ({
+    id: offer.id,
     title: offer.title,
     lat: offer.location.latitude,
     lng: offer.location.longitude,
   }));
+
   const selectedPoint: Point | null = activeOffer
     ? {
+      id: activeOffer.id,
       title: activeOffer.title,
       lat: activeOffer.location.latitude,
       lng: activeOffer.location.longitude,
@@ -70,31 +73,7 @@ function MainPage() {
 
   return (
     <div className="page page--gray page--main">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <Logo/>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      <Header/>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <CitiesList activeCity={currentCity} onCityChange={handleCityChange}/>

@@ -9,6 +9,13 @@ export enum AppRoute {
   NotFound = '*'
 }
 
+export enum ApiRoute {
+  Offers = '/offers',
+  Reviews = '/comments',
+  Login = '/login',
+  Logout = '/logout'
+}
+
 export enum AuthStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
@@ -34,7 +41,7 @@ export const CURRENT_CUSTOM_ICON = leaflet.icon({
   iconAnchor: [13, 39],
 });
 
-export const PlaceCardConfigData: Record<PlaceCardLocation, string> = {
+export const PLACE_CARD_CONFIG_DATA: Record<PlaceCardLocation, string> = {
   [PlaceCardLocation.MainPage]: 'cities',
   [PlaceCardLocation.OfferPage]: 'near-places'
 };
@@ -94,3 +101,11 @@ export const CITIES = [
   }];
 
 export const INITIAL_CITY = CITIES[0];
+
+export const BACKEND_URL = 'https://14.design.htmlacademy.pro/six-cities';
+export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
+export const REQUEST_TIMEOUT = 5000;
+
+export const MAX_REVIEW_COUNT = 10;
+export const MIN_REVIEW_LENGTH = 50;
+export const MAX_REVIEW_LENGTH = 300;

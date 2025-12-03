@@ -1,13 +1,35 @@
-import { INITIAL_CITY, SortingOption } from '../const';
+import { AuthStatus, INITIAL_CITY, SortingOption } from '../const';
 import {createReducer} from '@reduxjs/toolkit';
-import { Offers, Reviews } from '../types/offer';
-import { changeCity, loadOffers, loadReviews, setSortingOption } from './action';
+import { City, Offer, OfferCards, Reviews } from '../types/offer';
+import { addReview, changeCity, loadNearbyOffers, loadOffer, loadOffers, loadReviews, requireAuthorization, setAppUser, setOfferLoadingStatus, setOffersLoadingStatus, setReviewPostingStatus, setSortingOption } from './actions';
+import { AppUser } from '../types/user';
 
-const initialState = {
+type InitialState = {
+  city: City;
+  offers: OfferCards;
+  offer: Offer | null;
+  nearbyOffers: OfferCards;
+  reviews: Reviews;
+  sortingOption: SortingOption;
+  isOffersLoading: boolean;
+  authStatus: AuthStatus;
+  appUser: AppUser | null;
+  isOfferLoading: boolean;
+  isReviewPosting: boolean;
+}
+
+const initialState : InitialState = {
   city: INITIAL_CITY,
-  offers: [] as Offers,
-  reviews: [] as Reviews,
-  sortingOption: SortingOption.Popular
+  offers: [],
+  nearbyOffers: [],
+  offer: null,
+  reviews: [],
+  sortingOption: SortingOption.Popular,
+  isOffersLoading: false,
+  authStatus: AuthStatus.Unknown,
+  appUser: null,
+  isOfferLoading: false,
+  isReviewPosting: false
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -23,5 +45,29 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setSortingOption, (state, action) => {
       state.sortingOption = action.payload;
+    })
+    .addCase(setOffersLoadingStatus, (state, action) => {
+      state.isOffersLoading = action.payload;
+    })
+    .addCase(setAppUser, (state, action) => {
+      state.appUser = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authStatus = action.payload;
+    })
+    .addCase(loadOffer, (state, action) => {
+      state.offer = action.payload;
+    })
+    .addCase(setOfferLoadingStatus, (state, action) => {
+      state.isOfferLoading = action.payload;
+    })
+    .addCase(loadNearbyOffers, (state, action) => {
+      state.nearbyOffers = action.payload;
+    })
+    .addCase(addReview, (state, action) => {
+      state.reviews.push(action.payload);
+    })
+    .addCase(setReviewPostingStatus, (state, action) => {
+      state.isReviewPosting = action.payload;
     });
 });

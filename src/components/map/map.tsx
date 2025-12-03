@@ -42,7 +42,7 @@ function Map({ city, points, selectedPoint }: MapProps) {
         const point = points[index];
         if (point) {
           marker.setIcon(
-            selectedPoint && point.title === selectedPoint.title
+            selectedPoint && point.id === selectedPoint.id
               ? CURRENT_CUSTOM_ICON
               : DEFAULT_CUSTOM_ICON
           );

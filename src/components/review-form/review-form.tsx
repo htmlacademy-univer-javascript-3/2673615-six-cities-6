@@ -1,9 +1,19 @@
 import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
+import { addReviewAction } from '../../store/api-actions';
+import { MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH } from '../../const';
 
-function ReviewForm() : JSX.Element{
+type ReviewFormProps = {
+  offerId: string;
+}
+
+function ReviewForm({offerId}: ReviewFormProps){
+  const dispatch = useAppDispatch();
+  const isPosting = useAppSelector((state) => state.isReviewPosting);
+
   const [formData, setFormData] = useState({
     rating: 0,
-    review: ''
+    comment: ''
   });
 
   const handleRatingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,13 +26,24 @@ function ReviewForm() : JSX.Element{
   const handleReviewChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
-      review: event.target.value
+      comment: event.target.value
     });
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    dispatch(addReviewAction({...formData, offerId}))
+      .unwrap()
+      .then(() => {
+        setFormData({
+          rating: 0,
+          comment: ''
+        });
+      })
+      .catch(() => {});
   };
+
+  const isFormValid = formData.rating !== 0 && formData.comment.length >= MIN_REVIEW_LENGTH && formData.comment.length <= MAX_REVIEW_LENGTH;
 
   const ratings = [
     { value: 5, title: 'perfect' },
@@ -68,7 +89,7 @@ function ReviewForm() : JSX.Element{
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={formData.review}
+        value={formData.comment}
         onChange={handleReviewChange}
       />
       <div className="reviews__button-wrapper">
@@ -80,6 +101,7 @@ function ReviewForm() : JSX.Element{
         <button
           className="reviews__submit form__submit button"
           type="submit"
+          disabled={isPosting || !isFormValid}
         >
           Submit
         </button>
