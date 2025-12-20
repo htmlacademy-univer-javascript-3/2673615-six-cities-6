@@ -95,8 +95,14 @@ export const appData = createSlice({
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.favoriteOffers = [];
+        if (state.offer) {
+          state.offer.isFavorite = false;
+        }
 
         state.offers.forEach((offer) => {
+          offer.isFavorite = false;
+        });
+        state.nearbyOffers.forEach((offer) => {
           offer.isFavorite = false;
         });
       });

@@ -1,4 +1,4 @@
-﻿import { useParams } from 'react-router-dom';
+﻿import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list.tsx';
 import ReviewForm from '../../components/review-form/review-form.tsx';
@@ -11,9 +11,9 @@ import ReviewList from '../../components/reviews-list/review-list.tsx';
 import { getRatingWidthPercentage } from '../../utils.ts';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.ts';
 import Header from '../../components/header/header.tsx';
-import { fetchOfferAction } from '../../store/api-actions.ts';
+import { changeFavoriteStatusAction, fetchOfferAction } from '../../store/api-actions.ts';
 import Loader from '../../components/loader/loader.tsx';
-import { AuthStatus, MAX_NEARBY_OFFERS, MAX_REVIEW_COUNT } from '../../const.ts';
+import { AppRoute, AuthStatus, MAX_NEARBY_OFFERS, MAX_REVIEW_COUNT } from '../../const.ts';
 import { getAuthStatus } from '../../store/user-process/selectors.ts';
 import { getIsOfferLoading, getNearbyOffers, getOffer, getReviews } from '../../store/data-process/selectors.ts';
 
@@ -50,6 +50,7 @@ function OfferGallery({ images }: { images: string[] }) {
 function OfferPage() {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const authStatus = useAppSelector(getAuthStatus);
   const isOfferLoading = useAppSelector(getIsOfferLoading);
@@ -96,6 +97,19 @@ function OfferPage() {
     }
     : null;
 
+
+  const handleFavoriteButtonClick = () => {
+    if (authStatus !== AuthStatus.Auth) {
+      navigate(AppRoute.Login);
+      return;
+    }
+
+    dispatch(changeFavoriteStatusAction({
+      offerId: currentOffer.id,
+      status: currentOffer.isFavorite ? 0 : 1
+    }));
+  };
+
   return (
     <div className="page">
       <Header />
@@ -105,13 +119,17 @@ function OfferPage() {
           <OfferGallery images={currentOffer.images}/>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              {currentOffer.isFavorite && (
+              {currentOffer.isPremium && (
                 <div className="offer__mark">
                   <span>Premium</span>
                 </div>)}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{currentOffer.title}</h1>
-                <button className={`offer__bookmark-button ${currentOffer.isFavorite ? 'offer__bookmark-button--active' : ''} button`} type="button">
+                <button
+                  onClick={handleFavoriteButtonClick}
+                  className={`offer__bookmark-button ${currentOffer.isFavorite ? 'offer__bookmark-button--active' : ''} button`}
+                  type="button"
+                >
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
