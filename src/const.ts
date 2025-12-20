@@ -13,7 +13,8 @@ export enum ApiRoute {
   Offers = '/offers',
   Reviews = '/comments',
   Login = '/login',
-  Logout = '/logout'
+  Logout = '/logout',
+  Favorite = '/favorite'
 }
 
 export enum AuthStatus {

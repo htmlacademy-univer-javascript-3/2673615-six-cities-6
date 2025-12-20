@@ -3,7 +3,10 @@ import { Offer, OfferCards, Reviews } from '../../types/offer';
 import {
   fetchOffersAction,
   fetchOfferAction,
-  addReviewAction
+  addReviewAction,
+  fetchFavoriteOffersAction,
+  changeFavoriteStatusAction,
+  logoutAction
 } from '../api-actions';
 import { NameSpace } from '../../const';
 
@@ -15,6 +18,7 @@ export type AppData = {
   isOffersLoading: boolean;
   isOfferLoading: boolean;
   isReviewPosting: boolean;
+  favoriteOffers: OfferCards;
 };
 
 const initialState: AppData = {
@@ -25,6 +29,7 @@ const initialState: AppData = {
   isOffersLoading: false,
   isOfferLoading: false,
   isReviewPosting: false,
+  favoriteOffers: []
 };
 
 export const appData = createSlice({
@@ -64,6 +69,42 @@ export const appData = createSlice({
       })
       .addCase(addReviewAction.rejected, (state) => {
         state.isReviewPosting = false;
+      })
+      .addCase(fetchFavoriteOffersAction.fulfilled, (state, action) => {
+        state.favoriteOffers = action.payload;
+      })
+      .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
+        const updatedOffer = action.payload;
+
+        state.offers = state.offers.map((offer) =>
+          offer.id === updatedOffer.id ? {...offer, isFavorite: updatedOffer.isFavorite} : offer
+        );
+        state.nearbyOffers = state.nearbyOffers.map((offer) =>
+          offer.id === updatedOffer.id ? {...offer, isFavorite: updatedOffer.isFavorite} : offer
+        );
+
+        if (state.offer && state.offer.id === updatedOffer.id) {
+          state.offer.isFavorite = updatedOffer.isFavorite;
+        }
+
+        if (updatedOffer.isFavorite) {
+          state.favoriteOffers.push(updatedOffer);
+        } else {
+          state.favoriteOffers = state.favoriteOffers.filter((offer) => offer.id !== updatedOffer.id);
+        }
+      })
+      .addCase(logoutAction.fulfilled, (state) => {
+        state.favoriteOffers = [];
+        if (state.offer) {
+          state.offer.isFavorite = false;
+        }
+
+        state.offers.forEach((offer) => {
+          offer.isFavorite = false;
+        });
+        state.nearbyOffers.forEach((offer) => {
+          offer.isFavorite = false;
+        });
       });
   },
 });

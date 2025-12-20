@@ -41,14 +41,7 @@ function PlaceCard({offer, location, onMouseEnter, onMouseLeave, isActive}: Plac
         </Link>
       </div>
 
-      <PlaceCardInfo
-        price={offer.price}
-        isFavorite={offer.isFavorite}
-        rating={offer.rating}
-        title={offer.title}
-        url={offerUrl}
-        placeType={offer.type}
-      />
+      <PlaceCardInfo offer={offer} url={offerUrl}/>
     </article>
   );
 }
