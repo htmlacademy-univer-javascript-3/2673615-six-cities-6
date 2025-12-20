@@ -13,6 +13,7 @@ import { SortingOption } from '../../const.ts';
 import Header from '../../components/header/header.tsx';
 import { getCity, getSortingOption } from '../../store/app-process/selectors.ts';
 import { getOffers } from '../../store/data-process/selectors.ts';
+import MainEmpty from '../../components/empty-content/main-empty.tsx';
 
 
 function MainPage() {
@@ -79,34 +80,38 @@ function MainPage() {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <CitiesList activeCity={currentCity} onCityChange={handleCityChange}/>
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in {currentCity.name}</b>
-              <SortingOptions
-                activeSortingOption={currentSortingOption}
-                onSortingOptionChange={handleSortingOptionChange}
-              />
-              <div className="cities__places-list places__list tabs__content">
-                <PlaceCardsList
-                  offers={sortedOffers}
-                  onCardHover={handleCardHover}
-                  location={PlaceCardLocation.MainPage}
-                  activeOfferId={activeOffer ? activeOffer.id : null}
+        <div className="cities">{
+          offers.length === 0
+            ? <MainEmpty city={currentCity.name}/>
+            :
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{offers.length} places to stay in {currentCity.name}</b>
+                <SortingOptions
+                  activeSortingOption={currentSortingOption}
+                  onSortingOptionChange={handleSortingOptionChange}
                 />
-              </div>
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map
-                  city={currentCity}
-                  points={points}
-                  selectedPoint={selectedPoint}
-                />
+                <div className="cities__places-list places__list tabs__content">
+                  <PlaceCardsList
+                    offers={sortedOffers}
+                    onCardHover={handleCardHover}
+                    location={PlaceCardLocation.MainPage}
+                    activeOfferId={activeOffer ? activeOffer.id : null}
+                  />
+                </div>
               </section>
+              <div className="cities__right-section">
+                <section className="cities__map map">
+                  <Map
+                    city={currentCity}
+                    points={points}
+                    selectedPoint={selectedPoint}
+                  />
+                </section>
+              </div>
             </div>
-          </div>
+        }
         </div>
       </main>
     </div>
