@@ -4,11 +4,13 @@ import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import Logo from '../logo/logo';
 import { logoutAction } from '../../store/api-actions';
 import { getAppUser, getAuthStatus } from '../../store/user-process/selectors';
+import { getFavoriteOffers } from '../../store/data-process/selectors';
 
 function Header(){
   const dispatch = useAppDispatch();
 
   const user = useAppSelector(getAppUser);
+  const favoriteOffersCount = useAppSelector(getFavoriteOffers).length;
   const authStatus = useAppSelector(getAuthStatus);
 
   const handleSignOut = (evt: React.MouseEvent<HTMLAnchorElement>) => {
@@ -35,7 +37,7 @@ function Header(){
                       <span className="header__user-name user__name">
                         {user?.email}
                       </span>
-                      <span className="header__favorite-count">3</span>
+                      <span className="header__favorite-count">{favoriteOffersCount}</span>
                     </Link>
                   </li>
                   <li className="header__nav-item">

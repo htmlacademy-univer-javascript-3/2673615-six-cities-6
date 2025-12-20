@@ -1,25 +1,43 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getRatingWidthPercentage } from '../../utils';
+import { OfferCard } from '../../types/offer';
+import { getAuthStatus } from '../../store/user-process/selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
+import { AppRoute, AuthStatus } from '../../const';
+import { changeFavoriteStatusAction } from '../../store/api-actions';
 
 type PlaceCardInfoProps = {
-    price: number;
-    isFavorite: boolean;
-    rating: number;
-    title: string;
+    offer: OfferCard;
     url: string;
-    placeType: string;
 }
 
+function PlaceCardInfo({offer, url}: PlaceCardInfoProps) {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const authStatus = useAppSelector(getAuthStatus);
 
-function PlaceCardInfo({price, isFavorite, rating, title, url, placeType}: PlaceCardInfoProps) : JSX.Element{
+  const handleFavoriteButtonClick = () => {
+    if (authStatus !== AuthStatus.Auth) {
+      navigate(AppRoute.Login);
+      return;
+    }
+
+    dispatch(changeFavoriteStatusAction({
+      offerId: offer.id,
+      status: offer.isFavorite ? 0 : 1
+    }));
+  };
+
   return(
     <div className="place-card__info">
       <div className="place-card__price-wrapper">
         <div className="place-card__price">
-          <b className="place-card__price-value">&euro;{price}</b>
+          <b className="place-card__price-value">&euro;{offer.price}</b>
           <span className="place-card__price-text">&#47;&nbsp;night</span>
         </div>
-        <button className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active' : ''} button`}
+        <button
+          onClick={handleFavoriteButtonClick}
+          className={`place-card__bookmark-button ${offer.isFavorite ? 'place-card__bookmark-button--active' : ''} button`}
           type="button"
         >
           <svg className="place-card__bookmark-icon" width="18" height="19">
@@ -30,14 +48,14 @@ function PlaceCardInfo({price, isFavorite, rating, title, url, placeType}: Place
       </div>
       <div className="place-card__rating rating">
         <div className="place-card__stars rating__stars">
-          <span style={{width: getRatingWidthPercentage(rating)}}></span>
+          <span style={{width: getRatingWidthPercentage(offer.rating)}}></span>
           <span className="visually-hidden">Rating</span>
         </div>
       </div>
       <h2 className="place-card__name">
-        <Link to={url}>{title}</Link>
+        <Link to={url}>{offer.title}</Link>
       </h2>
-      <p className="place-card__type">{placeType}</p>
+      <p className="place-card__type">{offer.type}</p>
     </div>
   );
 }

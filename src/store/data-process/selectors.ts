@@ -8,3 +8,4 @@ export const getReviews = (state: State) => state[NameSpace.Data].reviews;
 export const getIsOffersLoading = (state: State) => state[NameSpace.Data].isOffersLoading;
 export const getIsOfferLoading = (state: State) => state[NameSpace.Data].isOfferLoading;
 export const getIsReviewPosting = (state: State) => state[NameSpace.Data].isReviewPosting;
+export const getFavoriteOffers = (state: State) => state[NameSpace.Data].favoriteOffers;

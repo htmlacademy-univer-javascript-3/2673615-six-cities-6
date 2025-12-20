@@ -1,8 +1,10 @@
-﻿import FavoritePlaceCard from '../../components/favorite-place-card/favorite-place-card.tsx';
+﻿import { useEffect, useMemo } from 'react';
+import FavoritePlaceCard from '../../components/favorite-place-card/favorite-place-card.tsx';
 import Header from '../../components/header/header.tsx';
-import { useAppSelector } from '../../hooks/store.ts';
-import { getOffers } from '../../store/data-process/selectors.ts';
+import { useAppDispatch, useAppSelector } from '../../hooks/store.ts';
+import { getFavoriteOffers } from '../../store/data-process/selectors.ts';
 import { OfferCards } from '../../types/offer.ts';
+import { fetchFavoriteOffersAction } from '../../store/api-actions.ts';
 
 
 function getGroupedFavorites(offers: OfferCards){
@@ -20,7 +22,14 @@ function getGroupedFavorites(offers: OfferCards){
 }
 
 function FavoritesPage() {
-  const offers = useAppSelector(getOffers);
+  const dispatch = useAppDispatch();
+  const offers = useAppSelector(getFavoriteOffers);
+
+  useEffect(() => {
+    dispatch(fetchFavoriteOffersAction());
+  }, [dispatch]);
+
+  const groupedFavorites = useMemo(() => getGroupedFavorites(offers), [offers]);
 
   return (
     <div className="page">
@@ -31,7 +40,7 @@ function FavoritesPage() {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {getGroupedFavorites(offers).map(([cityName, cityOffers]) => (
+              {groupedFavorites.map(([cityName, cityOffers]) => (
                 <li key={cityName} className="favorites__locations-items">
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">

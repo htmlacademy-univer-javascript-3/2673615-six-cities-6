@@ -45,6 +45,11 @@ export type City = {
     location: Location;
 }
 
+export type ChangeFavoriteStatusData = {
+    offerId: string;
+    status: number;
+}
+
 export type Offers = Offer[];
 export type OfferCards = OfferCard[];
 export type Reviews = Review[];
