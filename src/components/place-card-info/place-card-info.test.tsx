@@ -1,4 +1,4 @@
-import { render, screen, act } from '@testing-library/react'; // Добавлен import act
+import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import PlaceCardInfo from './place-card-info';
