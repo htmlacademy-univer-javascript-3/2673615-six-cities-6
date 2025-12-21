@@ -1,7 +1,7 @@
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { NameSpace } from '../const';
-import { Offer, Review } from '../types/offer';
+import { AuthStatus, INITIAL_CITY, NameSpace, SortingOption } from '../const';
+import { City, Offer, Review } from '../types/offer';
 import { State } from '../types/store';
 import { createAPI } from '../service/api';
 
@@ -47,6 +47,10 @@ export const makeFakeReview = (): Review => ({
 });
 
 export const makeFakeStore = (initialState?: Partial<State>): State => ({
+  [NameSpace.User]: {
+    authStatus: AuthStatus.Unknown,
+    appUser: null,
+  },
   [NameSpace.Data]: {
     offers: [],
     offer: null,
@@ -57,5 +61,18 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
     isReviewPosting: false,
     favoriteOffers: [],
   },
+  [NameSpace.App]: {
+    city: INITIAL_CITY,
+    sortingOption: SortingOption.Popular,
+  },
   ...initialState ?? {},
 } as State);
+
+export const makeFakeCity = (): City => ({
+  name: 'Amsterdam',
+  location: {
+    latitude: 52.3740300,
+    longitude: 4.8896900,
+    zoom: 12
+  }
+});
