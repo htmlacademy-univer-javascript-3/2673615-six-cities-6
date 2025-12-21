@@ -1,4 +1,4 @@
-import { MAX_RATING } from './const';
+import { CITIES, MAX_RATING } from './const';
 
 export const getRatingWidthPercentage = (rating: number): string => {
   if (rating < 0) {
@@ -13,4 +13,9 @@ export const getPluralizedText = (word: string, count: number) => {
   const suffix = count > 1 ? 's' : '';
 
   return `${count} ${word}${suffix}`;
+};
+
+export const getRandomCityName = () => {
+  const randomIndex = Math.floor(Math.random() * CITIES.length);
+  return CITIES[randomIndex];
 };
