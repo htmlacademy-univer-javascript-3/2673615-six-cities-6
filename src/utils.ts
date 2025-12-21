@@ -5,6 +5,6 @@ export const getRatingWidthPercentage = (rating: number): string => {
     return '0%';
   }
 
-  const ratingAsPercentage = Math.min(rating, MAX_RATING) * 20;
+  const ratingAsPercentage = Math.min(Math.round(rating), MAX_RATING) * 20;
   return `${ratingAsPercentage}%`;
 };

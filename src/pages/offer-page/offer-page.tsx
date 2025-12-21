@@ -1,8 +1,7 @@
 ﻿import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list.tsx';
 import ReviewForm from '../../components/review-form/review-form.tsx';
-import { OfferCard } from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import { Point } from '../../types/map.ts';
@@ -33,8 +32,6 @@ function OfferPage() {
     .sort((x, y) => new Date(y.date).getTime() - new Date(x.date).getTime())
     .slice(0, MAX_REVIEW_COUNT);
 
-  const [activeNearbyOffer, setActiveNearbyOffer] = useState<OfferCard | undefined>(undefined);
-
   useEffect(() => {
     if (id) {
       dispatch(fetchOfferAction(id));
@@ -49,11 +46,6 @@ function OfferPage() {
     return <NotFoundPage/>;
   }
 
-  const handleNearbyCardHover = (offerId: string | null) => {
-    const activeOffer = nearbyOffers.find((offer) => offer.id === offerId);
-    setActiveNearbyOffer(activeOffer);
-  };
-
   const points: Point[] = nearbyOffers.concat(currentOffer).map((offer) => ({
     id: offer.id,
     title: offer.title,
@@ -61,15 +53,13 @@ function OfferPage() {
     lng: offer.location.longitude,
   }));
 
-  const selectedPoint: Point | null = activeNearbyOffer
-    ? {
-      id: activeNearbyOffer.id,
-      title: activeNearbyOffer.title,
-      lat: activeNearbyOffer.location.latitude,
-      lng: activeNearbyOffer.location.longitude,
-    }
-    : null;
-
+  const selectedPoint: Point =
+    {
+      id: currentOffer.id,
+      title: currentOffer.title,
+      lat: currentOffer.location.latitude,
+      lng: currentOffer.location.longitude,
+    };
 
   const handleFavoriteButtonClick = () => {
     if (authStatus !== AuthStatus.Auth) {
@@ -175,9 +165,9 @@ function OfferPage() {
             <div className="near-places__list places__list">
               <PlaceCardsList
                 offers={nearbyOffers}
-                onCardHover={handleNearbyCardHover}
+                onCardHover={() => {}}
                 location={PlaceCardLocation.OfferPage}
-                activeOfferId={activeNearbyOffer ? activeNearbyOffer.id : null}
+                activeOfferId={null}
               />
             </div>
           </section>
