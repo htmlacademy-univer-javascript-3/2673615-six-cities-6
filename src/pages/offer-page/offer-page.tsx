@@ -16,36 +16,9 @@ import Loader from '../../components/loader/loader.tsx';
 import { AppRoute, AuthStatus, MAX_NEARBY_OFFERS, MAX_REVIEW_COUNT } from '../../const.ts';
 import { getAuthStatus } from '../../store/user-process/selectors.ts';
 import { getIsOfferLoading, getNearbyOffers, getOffer, getReviews } from '../../store/data-process/selectors.ts';
+import GoodsList from '../../components/goods-list/goods-list.tsx';
+import OfferGallery from '../../components/offer-gallery/offer-gallery.tsx';
 
-
-function GoodsList({ goods }: { goods: string[] }){
-  return (
-    <div className="offer__inside">
-      <h2 className="offer__inside-title">What&apos;s inside</h2>
-      <ul className="offer__inside-list">
-        {goods.map((good) => (
-          <li key={good} className="offer__inside-item">
-            {good}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function OfferGallery({ images }: { images: string[] }) {
-  return (
-    <div className="offer__gallery-container container">
-      <div className="offer__gallery">
-        {images.map((image) => (
-          <div key={image} className="offer__image-wrapper">
-            <img className="offer__image" src={image} alt="Photo studio" />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 function OfferPage() {
   const { id } = useParams<{ id: string }>();
