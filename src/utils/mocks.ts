@@ -8,7 +8,7 @@ import { AppUser } from '../types/user';
 
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
-export const makeFakeOffer = (): Offer => ({
+export const makeFakeOffer = (overrides?: Partial<Offer>): Offer => ({
   id: '1',
   title: 'Beautiful apartment',
   type: 'apartment',
@@ -31,7 +31,8 @@ export const makeFakeOffer = (): Offer => ({
   },
   images: ['img/1.jpg'],
   maxAdults: 4,
-  previewImage: 'img/preview.jpg'
+  previewImage: 'img/preview.jpg',
+  ...overrides
 });
 
 export const makeFakeReview = (): Review => ({
