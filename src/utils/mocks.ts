@@ -4,6 +4,7 @@ import { AuthStatus, INITIAL_CITY, NameSpace, SortingOption } from '../const';
 import { City, Offer, Review } from '../types/offer';
 import { State } from '../types/store';
 import { createAPI } from '../service/api';
+import { AppUser } from '../types/user';
 
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
@@ -75,4 +76,12 @@ export const makeFakeCity = (): City => ({
     longitude: 4.8896900,
     zoom: 12
   }
+});
+
+export const makeFakeAppUser = (): AppUser => ({
+  name: 'Oliver.conner',
+  avatarUrl: 'https://url-to-image/image.jpg',
+  isPro: false,
+  email: 'oliver.conner@gmail.com',
+  token: 'secret-token'
 });
