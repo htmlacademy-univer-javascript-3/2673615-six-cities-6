@@ -8,3 +8,9 @@ export const getRatingWidthPercentage = (rating: number): string => {
   const ratingAsPercentage = Math.min(Math.round(rating), MAX_RATING) * 20;
   return `${ratingAsPercentage}%`;
 };
+
+export const getPluralizedText = (word: string, count: number) => {
+  const suffix = count > 1 ? 's' : '';
+
+  return `${count} ${word}${suffix}`;
+};

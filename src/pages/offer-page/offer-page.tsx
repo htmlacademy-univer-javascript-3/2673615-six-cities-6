@@ -7,7 +7,7 @@ import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import { Point } from '../../types/map.ts';
 import { PlaceCardLocation } from '../../types/place-card.ts';
 import ReviewList from '../../components/reviews-list/review-list.tsx';
-import { getRatingWidthPercentage } from '../../utils.ts';
+import { getPluralizedText, getRatingWidthPercentage } from '../../utils.ts';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.ts';
 import Header from '../../components/header/header.tsx';
 import { changeFavoriteStatusAction, fetchOfferAction } from '../../store/api-actions.ts';
@@ -111,10 +111,10 @@ function OfferPage() {
                   {currentOffer.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {currentOffer.bedrooms} Bedrooms
+                  {getPluralizedText('Bedroom', currentOffer.bedrooms)}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {currentOffer.maxAdults} adults
+                  Max {getPluralizedText('adult', currentOffer.maxAdults)}
                 </li>
               </ul>
               <div className="offer__price">
