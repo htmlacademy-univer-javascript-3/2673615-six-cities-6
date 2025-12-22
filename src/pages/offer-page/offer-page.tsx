@@ -1,14 +1,13 @@
 ﻿import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import PlaceCardsList from '../../components/place-cards-list/place-cards-list.tsx';
 import ReviewForm from '../../components/review-form/review-form.tsx';
-import { OfferCard } from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import { Point } from '../../types/map.ts';
 import { PlaceCardLocation } from '../../types/place-card.ts';
 import ReviewList from '../../components/reviews-list/review-list.tsx';
-import { getRatingWidthPercentage } from '../../utils.ts';
+import { getPluralizedText, getRatingWidthPercentage } from '../../utils.ts';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.ts';
 import Header from '../../components/header/header.tsx';
 import { changeFavoriteStatusAction, fetchOfferAction } from '../../store/api-actions.ts';
@@ -16,36 +15,9 @@ import Loader from '../../components/loader/loader.tsx';
 import { AppRoute, AuthStatus, MAX_NEARBY_OFFERS, MAX_REVIEW_COUNT } from '../../const.ts';
 import { getAuthStatus } from '../../store/user-process/selectors.ts';
 import { getIsOfferLoading, getNearbyOffers, getOffer, getReviews } from '../../store/data-process/selectors.ts';
+import GoodsList from '../../components/goods-list/goods-list.tsx';
+import OfferGallery from '../../components/offer-gallery/offer-gallery.tsx';
 
-
-function GoodsList({ goods }: { goods: string[] }){
-  return (
-    <div className="offer__inside">
-      <h2 className="offer__inside-title">What&apos;s inside</h2>
-      <ul className="offer__inside-list">
-        {goods.map((good) => (
-          <li key={good} className="offer__inside-item">
-            {good}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function OfferGallery({ images }: { images: string[] }) {
-  return (
-    <div className="offer__gallery-container container">
-      <div className="offer__gallery">
-        {images.map((image) => (
-          <div key={image} className="offer__image-wrapper">
-            <img className="offer__image" src={image} alt="Photo studio" />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 function OfferPage() {
   const { id } = useParams<{ id: string }>();
@@ -59,8 +31,6 @@ function OfferPage() {
   const reviews = [...useAppSelector(getReviews)]
     .sort((x, y) => new Date(y.date).getTime() - new Date(x.date).getTime())
     .slice(0, MAX_REVIEW_COUNT);
-
-  const [activeNearbyOffer, setActiveNearbyOffer] = useState<OfferCard | undefined>(undefined);
 
   useEffect(() => {
     if (id) {
@@ -76,11 +46,6 @@ function OfferPage() {
     return <NotFoundPage/>;
   }
 
-  const handleNearbyCardHover = (offerId: string | null) => {
-    const activeOffer = nearbyOffers.find((offer) => offer.id === offerId);
-    setActiveNearbyOffer(activeOffer);
-  };
-
   const points: Point[] = nearbyOffers.concat(currentOffer).map((offer) => ({
     id: offer.id,
     title: offer.title,
@@ -88,15 +53,13 @@ function OfferPage() {
     lng: offer.location.longitude,
   }));
 
-  const selectedPoint: Point | null = activeNearbyOffer
-    ? {
-      id: activeNearbyOffer.id,
-      title: activeNearbyOffer.title,
-      lat: activeNearbyOffer.location.latitude,
-      lng: activeNearbyOffer.location.longitude,
-    }
-    : null;
-
+  const selectedPoint: Point =
+    {
+      id: currentOffer.id,
+      title: currentOffer.title,
+      lat: currentOffer.location.latitude,
+      lng: currentOffer.location.longitude,
+    };
 
   const handleFavoriteButtonClick = () => {
     if (authStatus !== AuthStatus.Auth) {
@@ -148,10 +111,10 @@ function OfferPage() {
                   {currentOffer.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {currentOffer.bedrooms} Bedrooms
+                  {getPluralizedText('Bedroom', currentOffer.bedrooms)}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {currentOffer.maxAdults} adults
+                  Max {getPluralizedText('adult', currentOffer.maxAdults)}
                 </li>
               </ul>
               <div className="offer__price">
@@ -202,9 +165,9 @@ function OfferPage() {
             <div className="near-places__list places__list">
               <PlaceCardsList
                 offers={nearbyOffers}
-                onCardHover={handleNearbyCardHover}
+                onCardHover={() => {}}
                 location={PlaceCardLocation.OfferPage}
-                activeOfferId={activeNearbyOffer ? activeNearbyOffer.id : null}
+                activeOfferId={null}
               />
             </div>
           </section>

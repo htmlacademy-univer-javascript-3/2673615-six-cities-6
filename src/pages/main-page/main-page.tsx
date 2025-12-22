@@ -13,7 +13,7 @@ import { SortingOption } from '../../const.ts';
 import Header from '../../components/header/header.tsx';
 import { getCity, getSortingOption } from '../../store/app-process/selectors.ts';
 import { getOffers } from '../../store/data-process/selectors.ts';
-import MainEmpty from '../../components/empty-content/main-empty.tsx';
+import MainEmpty from '../../components/main-empty/main-empty.tsx';
 
 
 function MainPage() {

@@ -2,12 +2,18 @@
 import Logo from '../../components/logo/logo.tsx';
 import { useAppDispatch } from '../../hooks/store.ts';
 import { loginAction } from '../../store/api-actions.ts';
+import { getRandomCityName } from '../../utils.ts';
+import { Link } from 'react-router-dom';
+import { changeCity } from '../../store/app-process/app-process.ts';
+import { AppRoute } from '../../const.ts';
 
 function LoginPage() {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
+
+  const randomCity = getRandomCityName();
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -50,9 +56,13 @@ function LoginPage() {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                to={AppRoute.Root}
+                className="locations__item-link"
+                onClick={() => dispatch(changeCity(randomCity))}
+              >
+                <span>{randomCity.name}</span>
+              </Link>
             </div>
           </section>
         </div>

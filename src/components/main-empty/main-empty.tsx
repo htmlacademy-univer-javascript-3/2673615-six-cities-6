@@ -11,7 +11,9 @@ function MainEmpty({city} : MainEmptyProps) {
           <p className="cities__status-description">We could not find any property available at the moment in {city}</p>
         </div>
       </section>
-      <div className="cities__right-section"></div>
+      <div className="cities__right-section">
+        <img src="img/no-places@2x.png" alt="empty content" />
+      </div>
     </div>
   );
 }

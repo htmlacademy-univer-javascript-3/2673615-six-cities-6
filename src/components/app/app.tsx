@@ -5,7 +5,7 @@ import LoginPage from '../../pages/login-page/login-page.tsx';
 import FavoritesPage from '../../pages/favorites-page/favorites-page.tsx';
 import OfferPage from '../../pages/offer-page/offer-page.tsx';
 import NotFoundPage from '../../pages/not-found-page/not-found-page.tsx';
-import PrivateRoute from '../private-route/private-route.tsx';
+import RouteGuard from '../route-guard/route-guard.tsx';
 import Loader from '../loader/loader.tsx';
 import { useAppSelector } from '../../hooks/store.ts';
 import HistoryRouter from '../history-router/history-router.tsx';
@@ -36,14 +36,18 @@ function App() {
           />
           <Route
             path={AppRoute.Login}
-            element={<LoginPage/>}
+            element={
+              <RouteGuard isPrivateRoute={false}>
+                <LoginPage/>
+              </RouteGuard>
+            }
           />
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute>
+              <RouteGuard isPrivateRoute>
                 <FavoritesPage/>
-              </PrivateRoute>
+              </RouteGuard>
             }
           />
           <Route
